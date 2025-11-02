@@ -60,7 +60,7 @@ function LoginContent() {
                   Forgot password?
                 </Link>
               </div>
-              <Input id="password" type="password" required defaultValue="password" autoComplete="current-password" />
+              <Input id="password" type="password" required autoComplete="current-password" />
             </div>
             <Button type="submit" className="w-full">
               Login
