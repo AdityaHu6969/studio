@@ -21,11 +21,11 @@ import {
 const chartConfig = {
   present: {
     label: "Present",
-    color: "hsl(var(--chart-1))",
+    color: "hsl(var(--chart-2))",
   },
   absent: {
     label: "Absent",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--chart-1))",
   },
 }
 
