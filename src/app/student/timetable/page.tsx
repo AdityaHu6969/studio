@@ -2,7 +2,7 @@
 'use client';
 
 import * as React from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { TimetableHistoryView } from "@/components/student/timetable-history-view";
 import { ListCollapse, Calendar as CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,11 +12,14 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 
 export default function TimetablePage() {
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(new Date());
-  const [confirmedDate, setConfirmedDate] = React.useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
+  const [confirmedDate, setConfirmedDate] = React.useState<Date | undefined>(undefined);
   const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
+    const today = new Date();
+    setSelectedDate(today);
+    setConfirmedDate(today);
     setIsMounted(true);
   }, []);
 
@@ -70,7 +73,7 @@ export default function TimetablePage() {
       </Card>
        <Card className="mt-6">
         <CardHeader>
-            <CardTitle>Records for {confirmedDate ? format(confirmedDate, "PPP") : '...'}</CardTitle>
+            <CardTitle>Records for {isMounted && confirmedDate ? format(confirmedDate, "PPP") : '...'}</CardTitle>
         </CardHeader>
         <CardContent>
           {isMounted && <TimetableHistoryView selectedDate={confirmedDate} />}
