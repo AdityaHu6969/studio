@@ -12,12 +12,15 @@ import { ArrowLeft } from "lucide-react";
 function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const role = searchParams.get("role") || "user";
+  const role = searchParams.get("role") || "student"; // Default to student
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // In a real app, you'd perform authentication here.
-    // For this UI demo, we'll just redirect.
+    // For this demo, we'll set a flag in localStorage to persist session.
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userRole', role);
+
     const dashboardUrl = role === 'teacher' ? `/${role}/attendance` : `/${role}/dashboard`;
     router.push(dashboardUrl);
   };

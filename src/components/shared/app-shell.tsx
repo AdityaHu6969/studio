@@ -32,11 +32,22 @@ interface AppShellProps {
   children: React.ReactNode;
   navLinks: NavLink[];
   user: { name: string; email: string; avatar: string; role: string };
+  onLogout?: () => void;
 }
 
-export function AppShell({ children, navLinks, user }: AppShellProps) {
+export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
+
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    } else {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userRole');
+      router.push('/');
+    }
+  };
 
   return (
     <SidebarProvider>
@@ -90,7 +101,7 @@ export function AppShell({ children, navLinks, user }: AppShellProps) {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => router.push('/')}>
+              <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>
@@ -99,7 +110,7 @@ export function AppShell({ children, navLinks, user }: AppShellProps) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex h-14 items-center gap-4 border-b bg-card px-6 sticky top-0 z-30">
+        <header className="flex h-14 items-center gap-4 border-b bg-card px-4 sm:px-6 sticky top-0 z-30">
             <SidebarTrigger className="md:hidden">
               <PanelLeft />
             </SidebarTrigger>
