@@ -54,7 +54,7 @@ export function TimetableMonthlyView() {
           }
         }}
         components={{
-          DayContent: ({ date, ...props }) => (
+          DayContent: ({ date, displayMonth, ...props }) => (
             <div
               {...props}
               className={cn(
