@@ -19,7 +19,7 @@ export default function StudentDashboardPage() {
 
   return (
     <div className="flex flex-col gap-6 h-full">
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1">
         <Card className="animate-fade-in-up flex flex-col">
           <CardHeader>
             <CardTitle>Welcome, Alex!</CardTitle>
@@ -67,8 +67,6 @@ export default function StudentDashboardPage() {
             <AttendancePieChart data={overallAttendance} />
           </CardContent>
         </Card>
-      </div>
-      <div className="grid md:grid-cols-2 gap-6">
         <Card className="animate-fade-in-up flex flex-col">
           <CardHeader>
             <CardTitle>Attendance by Subject</CardTitle>
@@ -100,6 +98,16 @@ export default function StudentDashboardPage() {
                 <div className="text-right flex-shrink-0">
                     <Badge variant="destructive">Absent</Badge>
                     <p className="text-xs text-muted-foreground mt-1">Yesterday</p>
+                </div>
+             </div>
+             <div className="flex items-start justify-between gap-4">
+                <div className="flex-grow">
+                    <p className="font-medium">History</p>
+                    <p className="text-sm text-muted-foreground">Marked present by Dr. Jones</p>
+                </div>
+                <div className="text-right flex-shrink-0">
+                    <Badge variant="secondary">Present</Badge>
+                    <p className="text-xs text-muted-foreground mt-1">2 days ago</p>
                 </div>
              </div>
           </CardContent>
