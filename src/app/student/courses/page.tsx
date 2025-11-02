@@ -77,8 +77,8 @@ export default function TimetablePage() {
                     key={`${time}-${day}`}
                     onClick={() => handlePeriodClick(period, day, time)}
                     className={cn(
-                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg m-1 min-h-[80px] transition-all duration-200 ease-in-out border-b border-r",
-                      isClickable && "cursor-pointer hover:scale-[1.02] hover:shadow-sm",
+                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg m-1 min-h-[80px] transition-all duration-200 ease-in-out border-b border-r bg-card/50",
+                      isClickable && "cursor-pointer hover:scale-[1.02] hover:shadow-lg hover:bg-card",
                       getStatusColor(period.status, period.subject)
                     )}
                     style={{ animation: `fade-in-up 0.5s ${timeIndex * 0.05 + dayIndex * 0.02}s ease-out forwards`, opacity: 0 }}
