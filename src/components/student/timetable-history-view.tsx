@@ -6,22 +6,33 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Period, PeriodStatus } from './timetable';
-import { format, isSameDay } from 'date-fns';
+import { format, isSameDay, getDay } from 'date-fns';
 
 interface HistoryEntry extends Period {
   date: Date;
 }
 
 const historyData: HistoryEntry[] = [
-  { date: new Date(), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
-  { date: new Date(), subject: "Chemistry I", status: "Absent", teacher: "Dr. Reed", room: "C-105" },
+  // Today's Data
+  { date: new Date(new Date().setHours(9, 30, 0, 0)), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
+  { date: new Date(new Date().setHours(11, 0, 0, 0)), subject: "Chemistry I", status: "Absent", teacher: "Dr. Reed", room: "C-105" },
+  
+  // Yesterday
   { date: new Date(new Date().setDate(new Date().getDate() - 1)), subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
+  
+  // 2 days ago
   { date: new Date(new Date().setDate(new Date().getDate() - 2)), subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
   { date: new Date(new Date().setDate(new Date().getDate() - 2)), subject: "Calculus II", status: "Absent", teacher: "Dr. Evans", room: "A-101" },
+
+  // 3 days ago
   { date: new Date(new Date().setDate(new Date().getDate() - 3)), subject: "World History", status: "Leave", teacher: "Dr. Jones", room: "D-110" },
+  
+  // 4 days ago
   { date: new Date(new Date().setDate(new Date().getDate() - 4)), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
   { date: new Date(new Date().setDate(new Date().getDate() - 4)), subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
   { date: new Date(new Date().setDate(new Date().getDate() - 4)), subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
+
+  // 5 days ago
   { date: new Date(new Date().setDate(new Date().getDate() - 5)), subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
 ];
 
@@ -47,17 +58,28 @@ interface TimetableHistoryViewProps {
 }
 
 export function TimetableHistoryView({ selectedDate }: TimetableHistoryViewProps) {
+  const isWeekend = useMemo(() => {
+    if (!selectedDate) return false;
+    const day = getDay(selectedDate);
+    return day === 0 || day === 6; // Sunday is 0, Saturday is 6
+  }, [selectedDate]);
+
   const filteredHistory = useMemo(() => {
-    if (!selectedDate) {
+    if (!selectedDate || isWeekend) {
       return [];
     }
     return historyData.filter(item => isSameDay(item.date, selectedDate)).sort((a,b) => a.date.getTime() - b.date.getTime());
-  }, [selectedDate]);
+  }, [selectedDate, isWeekend]);
 
   return (
     <ScrollArea className="h-96 w-full rounded-md border animate-fade-in-up">
       <div className="p-4">
-        {filteredHistory.length > 0 ? (
+        {isWeekend ? (
+           <div className="flex h-full min-h-[200px] flex-col items-center justify-center text-center text-muted-foreground">
+             <p className="font-semibold text-lg">It's a Holiday!</p>
+             <p>No classes are scheduled on Saturday or Sunday.</p>
+           </div>
+        ) : filteredHistory.length > 0 ? (
           filteredHistory.map((item, index) => (
             <React.Fragment key={index}>
               <div className="flex items-start justify-between gap-4 py-3">
