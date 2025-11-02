@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Period, PeriodStatus } from './timetable';
-import { format, isSameDay, getDay } from 'date-fns';
+import { format, isSameDay, getDay, isFuture } from 'date-fns';
 
 interface HistoryEntry extends Period {
   date: Date;
@@ -64,17 +64,27 @@ export function TimetableHistoryView({ selectedDate }: TimetableHistoryViewProps
     return day === 0 || day === 6; // Sunday is 0, Saturday is 6
   }, [selectedDate]);
 
+  const isFutureDate = useMemo(() => {
+    if (!selectedDate) return false;
+    return isFuture(selectedDate) && !isSameDay(selectedDate, new Date());
+  }, [selectedDate]);
+
   const filteredHistory = useMemo(() => {
-    if (!selectedDate || isWeekend) {
+    if (!selectedDate || isWeekend || isFutureDate) {
       return [];
     }
     return historyData.filter(item => isSameDay(item.date, selectedDate)).sort((a,b) => a.date.getTime() - b.date.getTime());
-  }, [selectedDate, isWeekend]);
+  }, [selectedDate, isWeekend, isFutureDate]);
 
   return (
     <ScrollArea className="h-96 w-full rounded-md border animate-fade-in-up">
       <div className="p-4">
-        {isWeekend ? (
+        {isFutureDate ? (
+            <div className="flex h-full min-h-[200px] flex-col items-center justify-center text-center text-muted-foreground">
+                <p className="font-semibold text-lg">Upcoming Day</p>
+                <p>Classes for {selectedDate ? format(selectedDate, 'eeee, MMMM do') : 'a future date'} are not yet recorded.</p>
+            </div>
+        ) : isWeekend ? (
            <div className="flex h-full min-h-[200px] flex-col items-center justify-center text-center text-muted-foreground">
              <p className="font-semibold text-lg">It's a Holiday!</p>
              <p>No classes are scheduled on Saturday or Sunday.</p>

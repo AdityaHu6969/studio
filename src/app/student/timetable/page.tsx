@@ -63,6 +63,7 @@ export default function TimetablePage() {
                     mode="single"
                     selected={selectedDate}
                     onSelect={setSelectedDate}
+                    disabled={(date) => date > new Date()}
                     initialFocus
                   />
                 </PopoverContent>
