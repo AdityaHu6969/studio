@@ -35,6 +35,7 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
       <html lang="en" suppressHydrationWarning>
         <head>
             <title>Patel College Hub</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta name="description" content="Your one-stop portal for college activities." />
             <meta name="theme-color" content="#4B0082" />
             <link rel="manifest" href="/manifest.json" />
@@ -50,6 +51,7 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <title>Patel College Hub</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Your one-stop portal for college activities." />
         <meta name="theme-color" content="#4B0082" />
         <link rel="manifest" href="/manifest.json" />
