@@ -12,24 +12,27 @@ export default function StudentDashboardPage() {
   const percentage = Math.round((overallAttendance.present / overallAttendance.total) * 100);
 
   return (
-    <div className="grid gap-6">
+    <div className="space-y-6">
       <Card>
         <CardHeader>
           <CardTitle>Welcome, Alex!</CardTitle>
           <CardDescription>Here's a summary of your attendance.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center gap-4">
-            <p className="text-5xl font-bold">{percentage}%</p>
-            <div className="flex flex-col">
-              <p className="text-lg font-medium">Overall Attendance</p>
-              <p className="text-sm text-muted-foreground">
-                You are currently meeting the attendance requirements. Keep it up!
-              </p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex items-center gap-4">
+              <p className="text-5xl font-bold">{percentage}%</p>
+              <div className="flex flex-col">
+                <p className="text-lg font-medium">Overall Attendance</p>
+              </div>
             </div>
+            <p className="text-sm text-muted-foreground sm:ml-4">
+              You are currently meeting the attendance requirements. Keep it up!
+            </p>
           </div>
         </CardContent>
       </Card>
+
       <div className="grid md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -43,13 +46,14 @@ export default function StudentDashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle>Attendance by Subject</CardTitle>
-            <CardDescription>Your attendance percentage in different subjects this semester.</CardDescription>
+            <CardDescription>Your attendance percentage this semester.</CardDescription>
           </CardHeader>
           <CardContent className="pl-0">
-            <AttendanceBarChart />
+             <AttendanceBarChart />
           </CardContent>
         </Card>
       </div>
+
        <Card>
         <CardHeader>
           <CardTitle>Recent Activity</CardTitle>
