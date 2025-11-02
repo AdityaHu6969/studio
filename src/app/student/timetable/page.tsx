@@ -10,7 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/utils';
 import { format, isFuture, isSameDay, isSaturday, isSunday } from 'date-fns';
 
-export default function TimetablePage() {
+export default function AttendanceHistoryPage() {
   const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
@@ -23,10 +23,6 @@ export default function TimetablePage() {
 
   const handleDateSelect = (date: Date | undefined) => {
     if (!date) return;
-    // Prevent selecting future dates, but allow today
-    if (isFuture(date) && !isSameDay(date, new Date())) {
-      return;
-    }
     setSelectedDate(date);
     setIsPopoverOpen(false); // Close popover after selection
   };
