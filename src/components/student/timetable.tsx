@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -16,6 +17,17 @@ export interface Period {
   status: PeriodStatus;
   teacher: string;
   room: string;
+}
+
+export interface Teacher {
+  name: string;
+  avatar: string;
+  email: string;
+  phone: string;
+}
+
+export interface Course {
+  description: string;
 }
 
 // More detailed schedule data including status, teacher, and room
@@ -87,3 +99,4 @@ export const getStatusColor = (status: PeriodStatus, subject: string) => {
     default: return "bg-gray-100 dark:bg-gray-800";
   }
 };
+
