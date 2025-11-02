@@ -9,9 +9,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-type PeriodStatus = "Present" | "Absent" | "Leave" | "Upcoming" | "Special";
+export type PeriodStatus = "Present" | "Absent" | "Leave" | "Upcoming" | "Special";
 
-interface Period {
+export interface Period {
   subject: string;
   status: PeriodStatus;
   teacher: string;
@@ -19,7 +19,7 @@ interface Period {
 }
 
 // More detailed schedule data including status, teacher, and room
-const scheduleData: Record<string, Record<string, Period>> = {
+export const scheduleData: Record<string, Record<string, Period>> = {
     "9:00-10:00": {
         "Monday": { subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
         "Tuesday": { subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
@@ -72,10 +72,10 @@ const scheduleData: Record<string, Record<string, Period>> = {
 };
 
 
-const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-const timeSlots = Object.keys(scheduleData);
+export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+export const timeSlots = Object.keys(scheduleData);
 
-const getStatusColor = (status: PeriodStatus, subject: string) => {
+export const getStatusColor = (status: PeriodStatus, subject: string) => {
   if (subject === "Lunch" || subject === "Free Period") return "bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300";
   if (subject === "Lab" || subject === "Sports") return "bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300";
   
@@ -87,57 +87,3 @@ const getStatusColor = (status: PeriodStatus, subject: string) => {
     default: return "bg-gray-100 dark:bg-gray-800";
   }
 };
-
-
-export function Timetable() {
-  return (
-    <TooltipProvider>
-      <div className="w-full overflow-x-auto">
-        <div className="grid grid-cols-[auto_repeat(5,minmax(120px,1fr))] min-w-[650px]">
-          {/* Header Row */}
-          <div className="font-semibold p-3 border-b border-r sticky left-0 bg-card z-10 text-xs sm:text-sm text-muted-foreground">Time</div>
-          {days.map((day) => (
-            <div key={day} className="font-semibold p-3 text-center border-b text-xs sm:text-sm text-muted-foreground">
-              {day}
-            </div>
-          ))}
-
-          {/* Schedule Rows */}
-          {timeSlots.map((time, timeIndex) => (
-            <React.Fragment key={time}>
-              <div className="font-semibold p-2 border-r text-xs sm:text-sm sticky left-0 bg-card z-10 flex items-center justify-center text-muted-foreground">{time}</div>
-              {days.map((day, dayIndex) => {
-                const period = scheduleData[time]?.[day];
-                if (!period) {
-                    return <div key={`${time}-${day}`} className="border-t m-1" />;
-                }
-                
-                return (
-                    <Tooltip key={`${time}-${day}`} delayDuration={150}>
-                        <TooltipTrigger asChild>
-                            <div
-                                className={cn(
-                                    "relative flex flex-col items-center justify-center p-2 border-t text-center rounded-lg m-1 min-h-[70px] transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg animate-fade-in-up",
-                                    getStatusColor(period.status, period.subject)
-                                )}
-                                style={{ animationDelay: `${timeIndex * 50 + dayIndex * 10}ms` }}
-                            >
-                                <p className="font-bold text-sm sm:text-base">{period.subject}</p>
-                                <p className="text-xs sm:text-sm opacity-80">{period.teacher}</p>
-                            </div>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p className='font-semibold'>{period.subject} ({period.status})</p>
-                            <p className="text-muted-foreground">Teacher: {period.teacher}</p>
-                            <p className="text-muted-foreground">Room: {period.room}</p>
-                        </TooltipContent>
-                    </Tooltip>
-                );
-              })}
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
-    </TooltipProvider>
-  );
-}
