@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { TrendingUp } from "lucide-react"
-import { Label, Pie, PieChart, Sector } from "recharts"
+import { Label, Pie, PieChart, Sector, Cell } from "recharts"
 
 import {
   Card,
@@ -49,7 +49,7 @@ export function AttendancePieChart({ data }: AttendancePieChartProps) {
   return (
     <ChartContainer
       config={chartConfig}
-      className="mx-auto aspect-video"
+      className="mx-auto aspect-square w-full max-w-[250px]"
     >
       <PieChart>
         <ChartTooltip
@@ -62,7 +62,12 @@ export function AttendancePieChart({ data }: AttendancePieChartProps) {
           nameKey="type"
           innerRadius="60%"
           strokeWidth={5}
+          isAnimationActive={true}
+          animationDuration={800}
         >
+          {chartData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.fill} />
+          ))}
           <Label
             content={({ viewBox }) => {
               if (viewBox && "cx" in viewBox && "cy" in viewBox) {
