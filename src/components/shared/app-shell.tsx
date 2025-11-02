@@ -24,9 +24,11 @@ import {
   SidebarFooter,
   SidebarTrigger,
   SidebarInset,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { GraduationCap, LogOut, PanelLeft } from "lucide-react";
 import type { NavLink } from "@/lib/nav-links";
+import { cn } from "@/lib/utils";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -34,6 +36,25 @@ interface AppShellProps {
   user: { name: string; email: string; avatar: string; role: string };
   onLogout?: () => void;
 }
+
+function AppHeader() {
+  const { isMobile } = useSidebar();
+
+  return (
+    <header className="flex h-14 items-center gap-4 border-b bg-card px-4 sm:px-6 sticky top-0 z-30">
+      <SidebarTrigger className={cn(isMobile && "hidden")}>
+        <PanelLeft />
+      </SidebarTrigger>
+      <SidebarTrigger className={cn("sm:hidden")}>
+        <PanelLeft />
+      </SidebarTrigger>
+      <div className="flex-1">
+        <h1 className="text-lg font-semibold">{useSidebar().user.role} Portal</h1>
+      </div>
+    </header>
+  );
+}
+
 
 export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) {
   const pathname = usePathname();
@@ -107,8 +128,8 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
           </DropdownMenu>
         </SidebarFooter>
       </Sidebar>
-      <div className="flex flex-col min-h-screen w-full">
-        <header className="flex h-14 items-center gap-4 border-b bg-card px-4 sm:px-6 sticky top-0 z-30">
+      <div className="flex flex-col h-screen w-full">
+        <header className="flex h-14 items-center gap-4 border-b bg-card px-4 sm:px-6 sticky top-0 z-30 flex-shrink-0">
             <SidebarTrigger>
               <PanelLeft />
             </SidebarTrigger>
@@ -116,7 +137,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
               <h1 className="text-lg font-semibold">{user.role} Portal</h1>
             </div>
         </header>
-        <main className="flex-1 p-4 sm:p-6 overflow-y-auto bg-muted/40">{children}</main>
+        <main className="flex-1 p-4 sm:p-6 overflow-hidden bg-muted/40">{children}</main>
       </div>
     </SidebarProvider>
   );
