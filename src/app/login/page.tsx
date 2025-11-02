@@ -50,6 +50,7 @@ function LoginContent() {
                 placeholder="m@example.com"
                 required
                 defaultValue={role === 'admin' ? 'admin@patel.edu' : role === 'teacher' ? 'teacher@patel.edu' : 'student@patel.edu'}
+                autoComplete="email"
               />
             </div>
             <div className="grid gap-2">
@@ -59,7 +60,7 @@ function LoginContent() {
                   Forgot password?
                 </Link>
               </div>
-              <Input id="password" type="password" required defaultValue="password" />
+              <Input id="password" type="password" required defaultValue="password" autoComplete="current-password" />
             </div>
             <Button type="submit" className="w-full">
               Login
