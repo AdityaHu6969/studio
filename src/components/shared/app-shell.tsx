@@ -54,9 +54,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="shrink-0">
-              <GraduationCap className="h-5 w-5 text-primary" />
-            </Button>
+            <GraduationCap className="h-6 w-6 text-primary" />
             <span className="font-semibold text-lg truncate">Patel College Hub</span>
           </div>
         </SidebarHeader>
@@ -83,7 +81,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
               <Button variant="ghost" className="w-full justify-start gap-2 h-12 px-2">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback>{user.name.split(' ').pop()?.charAt(0)}</AvatarFallback>
+                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className="text-left truncate">
                   <p className="font-medium truncate">{user.name}</p>
