@@ -116,7 +116,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
               <h1 className="text-lg font-semibold">{user.role} Portal</h1>
             </div>
         </header>
-        <main className="flex-1 p-4 sm:p-6 overflow-x-hidden">{children}</main>
+        <main className="flex-1 p-4 sm:p-6 overflow-y-auto">{children}</main>
       </div>
     </SidebarProvider>
   );
