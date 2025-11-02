@@ -29,88 +29,89 @@ export default function StudentDashboardPage() {
   ];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+    <div className="h-full w-full flex flex-col p-4 sm:p-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
         
-      <Card className="animate-fade-in-up flex flex-col">
-        <CardHeader>
-          <CardTitle>Welcome, Alex!</CardTitle>
-          <CardDescription>Here's a summary of your attendance.</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-grow flex-col items-center justify-center sm:flex-row sm:gap-6">
-            <div className="relative h-32 w-32 shrink-0 sm:h-40 sm:w-40">
-              <svg className="h-full w-full" viewBox="0 0 36 36">
-                <path
-                  className="text-muted/50"
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                />
-                <path
-                  className="text-primary transition-all duration-1000 ease-out"
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeDasharray={`${percentage}, 100`}
-                  strokeLinecap="round"
-                  style={{ animation: 'progress 1s ease-out forwards' }}
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-3xl font-bold sm:text-4xl">{percentage}%</p>
+        <Card className="animate-fade-in-up flex flex-col">
+          <CardHeader>
+            <CardTitle>Welcome, Alex!</CardTitle>
+            <CardDescription>Here's a summary of your attendance.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-grow flex-col items-center justify-center sm:flex-row sm:gap-6">
+              <div className="relative h-32 w-32 shrink-0 sm:h-40 sm:w-40">
+                <svg className="h-full w-full" viewBox="0 0 36 36">
+                  <path
+                    className="text-muted/50"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                  />
+                  <path
+                    className="text-primary transition-all duration-1000 ease-out"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeDasharray={`${percentage}, 100`}
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <p className="text-3xl font-bold sm:text-4xl">{percentage}%</p>
+                </div>
               </div>
-            </div>
-            <div className="mt-4 flex-1 text-center sm:mt-0 sm:text-left">
-              <p className="text-xl font-semibold">Overall Attendance</p>
-              <p className={`mt-1 text-sm ${attendanceColor}`}>
-                {attendanceStatus}
-              </p>
-            </div>
-        </CardContent>
-      </Card>
-
-      <Card className="animate-fade-in-up flex flex-col">
-        <CardHeader>
-          <CardTitle>Attendance Breakdown</CardTitle>
-          <CardDescription>Present vs. Absent classes.</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-grow items-center justify-center">
-          <AttendancePieChart data={overallAttendance} />
-        </CardContent>
-      </Card>
-
-      <Card className="animate-fade-in-up flex flex-col">
-        <CardHeader>
-          <CardTitle>Attendance by Subject</CardTitle>
-          <CardDescription>Your attendance percentage per subject.</CardDescription>
-        </CardHeader>
-        <CardContent className="flex-grow">
-           <AttendanceBarChart />
-        </CardContent>
-      </Card>
-
-      <Card className="animate-fade-in-up flex flex-col">
-        <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
-          <CardDescription>Your latest attendance records.</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-grow flex-col space-y-4 overflow-y-auto">
-           {recentActivity.map((activity, index) => (
-              <div key={index} className="flex items-start justify-between gap-4">
-                  <div className="flex-grow">
-                      <p className="font-medium">{activity.subject}</p>
-                      <p className="text-sm text-muted-foreground">Marked by {activity.teacher}</p>
-                  </div>
-                  <div className="text-right flex-shrink-0">
-                      <Badge variant={activity.status === 'Present' ? 'secondary' : 'destructive'}>{activity.status}</Badge>
-                      <p className="mt-1 text-xs text-muted-foreground">{activity.time}</p>
-                  </div>
+              <div className="mt-4 flex-1 text-center sm:mt-0 sm:text-left">
+                <p className="text-xl font-semibold">Overall Attendance</p>
+                <p className={`mt-1 text-sm ${attendanceColor}`}>
+                  {attendanceStatus}
+                </p>
               </div>
-           ))}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
+        <Card className="animate-fade-in-up flex flex-col [animation-delay:100ms]">
+          <CardHeader>
+            <CardTitle>Attendance Breakdown</CardTitle>
+            <CardDescription>Present vs. Absent classes.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-grow items-center justify-center">
+            <AttendancePieChart data={overallAttendance} />
+          </CardContent>
+        </Card>
+
+        <Card className="animate-fade-in-up flex flex-col [animation-delay:200ms]">
+          <CardHeader>
+            <CardTitle>Attendance by Subject</CardTitle>
+            <CardDescription>Your attendance percentage per subject.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex-grow">
+            <AttendanceBarChart />
+          </CardContent>
+        </Card>
+
+        <Card className="animate-fade-in-up flex flex-col [animation-delay:300ms]">
+          <CardHeader>
+            <CardTitle>Recent Activity</CardTitle>
+            <CardDescription>Your latest attendance records.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-grow flex-col space-y-4 overflow-y-auto">
+            {recentActivity.map((activity, index) => (
+                <div key={index} className="flex items-start justify-between gap-4">
+                    <div className="flex-grow">
+                        <p className="font-medium">{activity.subject}</p>
+                        <p className="text-sm text-muted-foreground">Marked by {activity.teacher}</p>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                        <Badge variant={activity.status === 'Present' ? 'secondary' : 'destructive'}>{activity.status}</Badge>
+                        <p className="mt-1 text-xs text-muted-foreground">{activity.time}</p>
+                    </div>
+                </div>
+            ))}
+          </CardContent>
+        </Card>
+
+      </div>
     </div>
   );
 }

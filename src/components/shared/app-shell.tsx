@@ -128,7 +128,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
           </DropdownMenu>
         </SidebarFooter>
       </Sidebar>
-      <div className="flex flex-col h-screen w-full">
+      <div className="flex flex-col h-screen w-full transition-all duration-300 ease-in-out group-data-[state=expanded]:sm:pl-64">
         <header className="flex h-14 items-center gap-4 border-b bg-card px-4 sm:px-6 sticky top-0 z-30 flex-shrink-0">
             <SidebarTrigger>
               <PanelLeft />
@@ -137,7 +137,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
               <h1 className="text-lg font-semibold">{user.role} Portal</h1>
             </div>
         </header>
-        <main className="flex-1 p-4 sm:p-6 overflow-hidden bg-muted/40">{children}</main>
+        <main className="flex-1 overflow-auto bg-muted/40">{children}</main>
       </div>
     </SidebarProvider>
   );
