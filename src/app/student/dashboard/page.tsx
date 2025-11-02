@@ -12,8 +12,8 @@ export default function StudentDashboardPage() {
   const percentage = Math.round((overallAttendance.present / overallAttendance.total) * 100);
 
   return (
-    <div className="space-y-6">
-      <Card>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Welcome, Alex!</CardTitle>
           <CardDescription>Here's a summary of your attendance.</CardDescription>
@@ -33,28 +33,27 @@ export default function StudentDashboardPage() {
         </CardContent>
       </Card>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Attendance Breakdown</CardTitle>
-            <CardDescription>Visual representation of your attendance.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <AttendancePieChart data={overallAttendance} />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Attendance by Subject</CardTitle>
-            <CardDescription>Your attendance percentage this semester.</CardDescription>
-          </CardHeader>
-          <CardContent>
-             <AttendanceBarChart />
-          </CardContent>
-        </Card>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Attendance Breakdown</CardTitle>
+          <CardDescription>Visual representation of your attendance.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <AttendancePieChart data={overallAttendance} />
+        </CardContent>
+      </Card>
 
-       <Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Attendance by Subject</CardTitle>
+          <CardDescription>Your attendance percentage this semester.</CardDescription>
+        </CardHeader>
+        <CardContent>
+           <AttendanceBarChart />
+        </CardContent>
+      </Card>
+
+       <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Recent Activity</CardTitle>
         </CardHeader>

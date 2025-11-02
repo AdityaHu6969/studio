@@ -33,7 +33,7 @@ const chartConfig = {
 
 export function AttendanceBarChart() {
   return (
-    <ChartContainer config={chartConfig} className="min-h-[200px] w-full aspect-video">
+    <ChartContainer config={chartConfig} className="w-full aspect-video">
       <BarChart 
         accessibilityLayer 
         data={chartData}
