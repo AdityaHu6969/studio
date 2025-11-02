@@ -37,7 +37,7 @@ function Calendar({
         head_cell:
           "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
-        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected])]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
         day: cn(
           buttonVariants({ variant: "ghost" }),
           "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
@@ -45,9 +45,9 @@ function Calendar({
         day_range_end: "day-range-end",
         
         day_selected:
-          "bg-primary text-primary-foreground hover:bg-primary/90 focus:bg-primary/90",
+          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
         day_today:
-          "bg-transparent ring-1 ring-primary",
+          "bg-transparent ring-1 ring-primary text-primary",
         day_outside:
           "day-outside text-muted-foreground opacity-50 pointer-events-none",
         day_disabled: "text-muted-foreground opacity-50",
@@ -55,7 +55,7 @@ function Calendar({
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
 
-        day_holiday: "text-destructive",
+        day_holiday: "text-destructive dark:text-red-400",
         ...classNames,
       }}
       components={{

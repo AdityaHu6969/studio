@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { format, isFuture, isPast, isSameDay, isSunday } from 'date-fns';
+import { format, isFuture, isSameDay, isSunday } from 'date-fns';
 
 export default function TimetablePage() {
   const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(new Date());
@@ -21,7 +21,9 @@ export default function TimetablePage() {
   }, []);
 
   const handleDateSelect = (date: Date | undefined) => {
-    if (date && isFuture(date) && !isSameDay(date, new Date())) return;
+    if (!date) return;
+    // We only disable future dates in the calendar itself.
+    // The logic to show "Upcoming" is in TimetableHistoryView.
     setSelectedDate(date);
     setIsPopoverOpen(false); // Close popover on date select
   };
