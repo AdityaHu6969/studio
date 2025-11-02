@@ -29,95 +29,89 @@ export default function StudentDashboardPage() {
   ];
 
   return (
-    <div className="flex h-full flex-col">
-      <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
-        <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-rows-2 lg:gap-8">
-          
-          {/* Welcome Card */}
-          <Card className="animate-fade-in-up flex flex-col lg:row-span-1">
-            <CardHeader>
-              <CardTitle>Welcome, Alex!</CardTitle>
-              <CardDescription>Here's a summary of your attendance.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-grow flex-col items-center justify-center sm:flex-row sm:gap-6">
-                <div className="relative h-32 w-32 shrink-0 sm:h-40 sm:w-40">
-                  <svg className="h-full w-full" viewBox="0 0 36 36">
-                    <path
-                      className="text-muted/50"
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                    />
-                    <path
-                      className="text-primary transition-all duration-1000 ease-out"
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeDasharray={`${percentage}, 100`}
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                      <p className="text-3xl font-bold sm:text-4xl">{percentage}%</p>
-                  </div>
-                </div>
-                <div className="mt-4 flex-1 text-center sm:mt-0 sm:text-left">
-                  <p className="text-xl font-semibold">Overall Attendance</p>
-                  <p className={`mt-1 text-sm ${attendanceColor}`}>
-                    {attendanceStatus}
-                  </p>
-                </div>
-            </CardContent>
-          </Card>
-          
-          {/* Attendance Breakdown */}
-          <Card className="animate-fade-in-up flex flex-col [animation-delay:100ms] lg:row-span-1">
-            <CardHeader>
-              <CardTitle>Attendance Breakdown</CardTitle>
-              <CardDescription>Present vs. Absent classes.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-grow items-center justify-center">
-              <AttendancePieChart data={overallAttendance} />
-            </CardContent>
-          </Card>
+    <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
+            {/* Welcome Card & Attendance Pie Chart */}
+            <Card className="animate-fade-in-up flex flex-col">
+                <CardHeader>
+                    <CardTitle>Welcome, Alex!</CardTitle>
+                    <CardDescription>Here's a summary of your attendance.</CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-grow flex-col items-center justify-center gap-4 sm:flex-row">
+                    <div className="relative h-32 w-32 shrink-0 sm:h-40 sm:w-40">
+                        <svg className="h-full w-full" viewBox="0 0 36 36">
+                            <path
+                                className="text-muted/50"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="3"
+                            />
+                            <path
+                                className="text-primary transition-all duration-1000 ease-out"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="3"
+                                strokeDasharray={`${percentage}, 100`}
+                                strokeLinecap="round"
+                            />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <p className="text-3xl font-bold sm:text-4xl">{percentage}%</p>
+                        </div>
+                    </div>
+                    <div className="mt-4 flex-1 text-center sm:mt-0 sm:text-left">
+                        <p className="text-xl font-semibold">Overall Attendance</p>
+                        <p className={`mt-1 text-sm ${attendanceColor}`}>{attendanceStatus}</p>
+                    </div>
+                </CardContent>
+            </Card>
 
-          {/* Attendance by Subject */}
-          <Card className="animate-fade-in-up flex flex-col [animation-delay:200ms] lg:row-span-1">
-            <CardHeader>
-              <CardTitle>Attendance by Subject</CardTitle>
-              <CardDescription>Your attendance percentage per subject.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <AttendanceBarChart />
-            </CardContent>
-          </Card>
-          
-          {/* Recent Activity */}
-          <Card className="animate-fade-in-up flex flex-col [animation-delay:300ms] lg:row-span-1">
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Your latest attendance records.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-grow flex-col justify-center space-y-4 p-6">
-              {recentActivity.slice(0, 4).map((activity, index) => (
-                  <div key={index} className="flex items-start justify-between gap-4">
-                      <div className="flex-grow">
-                          <p className="font-medium">{activity.subject}</p>
-                          <p className="text-sm text-muted-foreground">Marked by {activity.teacher}</p>
-                      </div>
-                      <div className="text-right flex-shrink-0">
-                          <Badge variant={activity.status === 'Present' ? 'secondary' : 'destructive'}>{activity.status}</Badge>
-                          <p className="mt-1 text-xs text-muted-foreground">{activity.time}</p>
-                      </div>
-                  </div>
-              ))}
-            </CardContent>
-          </Card>
+            <Card className="animate-fade-in-up flex flex-col [animation-delay:100ms]">
+                <CardHeader>
+                    <CardTitle>Attendance Breakdown</CardTitle>
+                    <CardDescription>Present vs. Absent classes.</CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-grow items-center justify-center">
+                    <AttendancePieChart data={overallAttendance} />
+                </CardContent>
+            </Card>
 
+            {/* Attendance by Subject & Recent Activity */}
+            <Card className="animate-fade-in-up flex flex-col [animation-delay:200ms]">
+                <CardHeader>
+                    <CardTitle>Attendance by Subject</CardTitle>
+                    <CardDescription>Your attendance percentage per subject.</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                    <AttendanceBarChart />
+                </CardContent>
+            </Card>
+
+            <Card className="animate-fade-in-up flex flex-col [animation-delay:300ms]">
+                <CardHeader>
+                    <CardTitle>Recent Activity</CardTitle>
+                    <CardDescription>Your latest attendance records.</CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-grow flex-col justify-center space-y-4">
+                    {recentActivity.slice(0, 4).map((activity, index) => (
+                        <div key={index} className="flex items-start justify-between gap-4">
+                            <div className="flex-grow">
+                                <p className="font-medium">{activity.subject}</p>
+                                <p className="text-sm text-muted-foreground">Marked by {activity.teacher}</p>
+                            </div>
+                            <div className="text-right flex-shrink-0">
+                                <Badge variant={activity.status === 'Present' ? 'default' : 'destructive'} className={activity.status === 'Present' ? 'bg-green-500/20 text-green-700 border-green-500/30 hover:bg-green-500/30 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/20' : ''}>
+                                    {activity.status}
+                                </Badge>
+                                <p className="mt-1 text-xs text-muted-foreground">{activity.time}</p>
+                            </div>
+                        </div>
+                    ))}
+                </CardContent>
+            </Card>
         </div>
-      </main>
-    </div>
+    </main>
   );
 }
