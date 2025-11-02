@@ -9,7 +9,7 @@ export default function StudentDashboardPage() {
     present: 102,
     absent: 18,
   };
-  const percentage = Math.round((overallAttendance.present / overallAttendance.total) * 100);
+  const percentage = 85;
 
   const attendanceStatus = percentage >= 75 
     ? "You are currently meeting the attendance requirements. Keep it up!"
@@ -17,8 +17,8 @@ export default function StudentDashboardPage() {
   const attendanceColor = percentage >= 75 ? "text-primary" : "text-yellow-500";
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <Card className="md:col-span-2 animate-fade-in-up">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <Card className="animate-fade-in-up">
         <CardHeader>
           <CardTitle>Welcome, Alex!</CardTitle>
           <CardDescription>Here's a summary of your attendance.</CardDescription>
@@ -76,7 +76,7 @@ export default function StudentDashboardPage() {
         </CardContent>
       </Card>
 
-       <Card className="md:col-span-2">
+       <Card>
         <CardHeader>
           <CardTitle>Recent Activity</CardTitle>
         </CardHeader>
