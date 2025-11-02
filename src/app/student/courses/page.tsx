@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Mail } from "lucide-react";
 
 const courses = [
   {
@@ -7,7 +8,8 @@ const courses = [
     name: "Calculus II",
     teacher: {
       name: "Dr. Evans",
-      avatar: "https://picsum.photos/seed/202/100/100"
+      avatar: "https://picsum.photos/seed/202/100/100",
+      email: "d.evans@patel.edu"
     },
     description: "Advanced topics in differential and integral calculus."
   },
@@ -16,7 +18,8 @@ const courses = [
     name: "Physics I",
     teacher: {
       name: "Dr. Smith",
-      avatar: "https://picsum.photos/seed/203/100/100"
+      avatar: "https://picsum.photos/seed/203/100/100",
+      email: "d.smith@patel.edu"
     },
     description: "Fundamentals of mechanics, heat, and sound."
   },
@@ -25,7 +28,8 @@ const courses = [
     name: "World History",
     teacher: {
       name: "Dr. Jones",
-      avatar: "https://picsum.photos/seed/204/100/100"
+      avatar: "https://picsum.photos/seed/204/100/100",
+      email: "d.jones@patel.edu"
     },
     description: "A survey of major global events and civilizations."
   },
@@ -34,7 +38,8 @@ const courses = [
     name: "Chemistry I",
     teacher: {
       name: "Dr. Reed",
-      avatar: "https://picsum.photos/seed/201/100/100"
+      avatar: "https://picsum.photos/seed/201/100/100",
+      email: "e.reed@patel.edu"
     },
     description: "Introduction to atomic structure, bonding, and reactions."
   },
@@ -43,7 +48,8 @@ const courses = [
     name: "English Literature",
     teacher: {
       name: "Dr. Austen",
-      avatar: "https://picsum.photos/seed/205/100/100"
+      avatar: "https://picsum.photos/seed/205/100/100",
+      email: "d.austen@patel.edu"
     },
     description: "Analysis of major works from Chaucer to modern day."
   },
@@ -52,7 +58,8 @@ const courses = [
     name: "Art History",
     teacher: {
       name: "Dr. Vinci",
-      avatar: "https://picsum.photos/seed/206/100/100"
+      avatar: "https://picsum.photos/seed/206/100/100",
+      email: "d.vinci@patel.edu"
     },
     description: "Exploring artistic movements from the Renaissance to Pop Art."
   }
@@ -81,7 +88,10 @@ export default function CoursesPage() {
                 </Avatar>
                 <div>
                   <p className="font-semibold">{course.teacher.name}</p>
-                  <p className="text-sm text-muted-foreground">Instructor</p>
+                  <a href={`mailto:${course.teacher.email}`} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+                    <Mail className="h-3.5 w-3.5" />
+                    {course.teacher.email}
+                  </a>
                 </div>
               </div>
             </CardContent>
