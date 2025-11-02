@@ -13,16 +13,16 @@ interface HistoryEntry extends Period {
 }
 
 const historyData: HistoryEntry[] = [
-  { date: new Date(2024, 6, 24, 9, 0), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
-  { date: new Date(2024, 6, 24, 10, 0), subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
-  { date: new Date(2024, 6, 23, 9, 0), subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
-  { date: new Date(2024, 6, 22, 11, 0), subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
-  { date: new Date(2024, 6, 22, 9, 0), subject: "Calculus II", status: "Absent", teacher: "Dr. Evans", room: "A-101" },
-  { date: new Date(2024, 6, 21, 10, 0), subject: "World History", status: "Leave", teacher: "Dr. Jones", room: "D-110" },
-  { date: new Date(2024, 6, 20, 9, 0), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
-  { date: new Date(2024, 6, 20, 10, 0), subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
-  { date: new Date(2024, 6, 20, 11, 0), subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
-  { date: new Date(2024, 6, 19, 13, 0), subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
+  { date: new Date(), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
+  { date: new Date(), subject: "Chemistry I", status: "Absent", teacher: "Dr. Reed", room: "C-105" },
+  { date: new Date(new Date().setDate(new Date().getDate() - 1)), subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
+  { date: new Date(new Date().setDate(new Date().getDate() - 2)), subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
+  { date: new Date(new Date().setDate(new Date().getDate() - 2)), subject: "Calculus II", status: "Absent", teacher: "Dr. Evans", room: "A-101" },
+  { date: new Date(new Date().setDate(new Date().getDate() - 3)), subject: "World History", status: "Leave", teacher: "Dr. Jones", room: "D-110" },
+  { date: new Date(new Date().setDate(new Date().getDate() - 4)), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
+  { date: new Date(new Date().setDate(new Date().getDate() - 4)), subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
+  { date: new Date(new Date().setDate(new Date().getDate() - 4)), subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
+  { date: new Date(new Date().setDate(new Date().getDate() - 5)), subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
 ];
 
 const getBadgeVariant = (status: PeriodStatus) => {
@@ -51,7 +51,7 @@ export function TimetableHistoryView({ selectedDate }: TimetableHistoryViewProps
     if (!selectedDate) {
       return [];
     }
-    return historyData.filter(item => isSameDay(item.date, selectedDate));
+    return historyData.filter(item => isSameDay(item.date, selectedDate)).sort((a,b) => a.date.getTime() - b.date.getTime());
   }, [selectedDate]);
 
   return (
