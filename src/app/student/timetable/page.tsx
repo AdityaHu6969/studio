@@ -1,4 +1,3 @@
-
 'use client';
 
 import * as React from 'react';
@@ -9,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { format, isFuture, isSameDay, isSunday } from 'date-fns';
+import { format, isFuture, isSameDay, isSaturday, isSunday } from 'date-fns';
 
 export default function TimetablePage() {
   const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
@@ -23,7 +22,6 @@ export default function TimetablePage() {
 
   const handleDateSelect = (date: Date | undefined) => {
     if (!date) return;
-    // Allow selection of any date that is not in the future
     if (isFuture(date) && !isSameDay(date, new Date())) {
       return;
     }
@@ -109,7 +107,7 @@ export default function TimetablePage() {
                     initialFocus
                     disabled={(date) => isFuture(date) && !isSameDay(date, new Date())}
                     modifiers={{
-                      holiday: (date) => isSunday(date),
+                      holiday: (date) => isSunday(date) || isSaturday(date),
                     }}
                     modifiersClassNames={{
                       holiday: "day-holiday",
