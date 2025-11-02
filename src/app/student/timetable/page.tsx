@@ -17,23 +17,26 @@ export default function TimetablePage() {
 
   React.useEffect(() => {
     setIsMounted(true);
+    // Set initial date only on the client after mount to avoid hydration mismatch
     setSelectedDate(new Date());
   }, []);
 
   const handleDateSelect = (date: Date | undefined) => {
     if (!date) return;
+    // Prevent selecting future dates, but allow today
     if (isFuture(date) && !isSameDay(date, new Date())) {
       return;
     }
     setSelectedDate(date);
-    setIsPopoverOpen(false);
+    setIsPopoverOpen(false); // Close popover after selection
   };
   
   if (!isMounted) {
+    // Render a skeleton loading state on the server and initial client render
     return (
       <div className="p-4 sm:p-6 lg:p-8">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold tracking-tight">Attendance & History</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Attendance History</h1>
           <p className="text-muted-foreground">Review your past attendance records by selecting a date.</p>
         </div>
         <Card>
@@ -71,7 +74,7 @@ export default function TimetablePage() {
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold tracking-tight">Attendance & History</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Attendance History</h1>
         <p className="text-muted-foreground">Review your past attendance records by selecting a date.</p>
       </div>
       <Card>
