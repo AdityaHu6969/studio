@@ -35,6 +35,11 @@ const courseDetails: Record<string, Course> = {
 
 export default function TimetablePage() {
   const [selectedPeriod, setSelectedPeriod] = React.useState<{ period: Period, day: string, time: string } | null>(null);
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handlePeriodClick = (period: Period, day: string, time: string) => {
     if (period.subject !== "Lunch" && period.subject !== "Free Period") {
@@ -52,7 +57,7 @@ export default function TimetablePage() {
         <p className="text-muted-foreground">Your weekly class schedule. Click a class for more details.</p>
       </div>
       <div className="w-full overflow-x-auto rounded-lg border bg-card/20 p-2">
-        <div className="grid grid-cols-[auto_repeat(5,1fr)] gap-1">
+        <div className="grid grid-cols-[auto_repeat(5,1fr)] gap-1 min-w-[600px]">
           {/* Header Row */}
           <div className="font-semibold p-3 sticky left-0 z-10 text-xs sm:text-sm text-muted-foreground">Time</div>
           {days.map((day) => (
@@ -93,43 +98,45 @@ export default function TimetablePage() {
           ))}
         </div>
       </div>
-
-      <Dialog open={!!selectedPeriod} onOpenChange={(isOpen) => !isOpen && setSelectedPeriod(null)}>
-        <DialogContent className="sm:max-w-md">
-          {selectedPeriod && (
-            <>
-              <DialogHeader>
-                <DialogTitle className="text-2xl">{selectedPeriod.period.subject}</DialogTitle>
-                <DialogDescription>
-                  {course?.description}
-                </DialogDescription>
-              </DialogHeader>
-              {teacher && (
-                <div className="pt-4 mt-4 border-t">
-                  <h3 className="font-semibold mb-3">Faculty Information</h3>
-                  <div className="flex items-center gap-4">
-                    <Avatar className="h-16 w-16">
-                      <AvatarImage src={teacher.avatar} alt={teacher.name} />
-                      <AvatarFallback>{teacher.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="space-y-1">
-                      <p className="font-bold text-lg">{teacher.name}</p>
-                      <a href={`mailto:${teacher.email}`} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        <Mail className="h-4 w-4" />
-                        {teacher.email}
-                      </a>
-                      <a href={`tel:${teacher.phone}`} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-                        <Phone className="h-4 w-4" />
-                        {teacher.phone}
-                      </a>
+      
+      {isMounted && (
+        <Dialog open={!!selectedPeriod} onOpenChange={(isOpen) => !isOpen && setSelectedPeriod(null)}>
+          <DialogContent className="sm:max-w-md">
+            {selectedPeriod && (
+              <>
+                <DialogHeader>
+                  <DialogTitle className="text-2xl">{selectedPeriod.period.subject}</DialogTitle>
+                  <DialogDescription>
+                    {course?.description}
+                  </DialogDescription>
+                </DialogHeader>
+                {teacher && (
+                  <div className="pt-4 mt-4 border-t">
+                    <h3 className="font-semibold mb-3">Faculty Information</h3>
+                    <div className="flex items-center gap-4">
+                      <Avatar className="h-16 w-16">
+                        <AvatarImage src={teacher.avatar} alt={teacher.name} />
+                        <AvatarFallback>{teacher.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div className="space-y-1">
+                        <p className="font-bold text-lg">{teacher.name}</p>
+                        <a href={`mailto:${teacher.email}`} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                          <Mail className="h-4 w-4" />
+                          {teacher.email}
+                        </a>
+                        <a href={`tel:${teacher.phone}`} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                          <Phone className="h-4 w-4" />
+                          {teacher.phone}
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+                )}
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
