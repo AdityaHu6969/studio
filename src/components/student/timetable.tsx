@@ -1,31 +1,89 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import React from 'react';
+import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-const schedule = {
-  "9:00 - 10:00": { "Monday": "Math", "Tuesday": "Physics", "Wednesday": "Math", "Thursday": "Physics", "Friday": "Math" },
-  "10:00 - 11:00": { "Monday": "Chemistry", "Tuesday": "History", "Wednesday": "Chemistry", "Thursday": "History", "Friday": "Lab" },
-  "11:00 - 12:00": { "Monday": "English", "Tuesday": "Math", "Wednesday": "English", "Thursday": "Math", "Friday": "Lab" },
-  "12:00 - 1:00": { "Monday": "Lunch", "Tuesday": "Lunch", "Wednesday": "Lunch", "Thursday": "Lunch", "Friday": "Lunch" },
-  "1:00 - 2:00": { "Monday": "History", "Tuesday": "English", "Wednesday": "Physics", "Thursday": "Chemistry", "Friday": "English" },
-  "2:00 - 3:00": { "Monday": "Physics", "Tuesday": "Chemistry", "Wednesday": "History", "Thursday": "English", "Friday": "Sports" },
-  "3:00 - 4:00": { "Monday": "Free", "Tuesday": "Free", "Wednesday": "Free", "Thursday": "Free", "Friday": "Sports" },
+type PeriodStatus = "Present" | "Absent" | "Leave" | "Upcoming" | "Special";
+
+interface Period {
+  subject: string;
+  status: PeriodStatus;
+  teacher: string;
+  room: string;
+}
+
+// More detailed schedule data including status, teacher, and room
+const scheduleData: Record<string, Record<string, Period>> = {
+    "9:00-10:00": {
+        "Monday": { subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
+        "Tuesday": { subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
+        "Wednesday": { subject: "Calculus II", status: "Absent", teacher: "Dr. Evans", room: "A-101" },
+        "Thursday": { subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
+        "Friday": { subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
+    },
+    "10:00-11:00": {
+        "Monday": { subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
+        "Tuesday": { subject: "World History", status: "Leave", teacher: "Dr. Jones", room: "D-110" },
+        "Wednesday": { subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
+        "Thursday": { subject: "World History", status: "Present", teacher: "Dr. Jones", room: "D-110" },
+        "Friday": { subject: "Lab", status: "Special", teacher: "Dr. Reed", room: "Lab-1" },
+    },
+    "11:00-12:00": {
+        "Monday": { subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
+        "Tuesday": { subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
+        "Wednesday": { subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
+        "Thursday": { subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
+        "Friday": { subject: "Lab", status: "Special", teacher: "Dr. Reed", room: "Lab-1" },
+    },
+    "12:00-1:00": {
+        "Monday": { subject: "Lunch", status: "Special", teacher: "-", room: "Cafeteria" },
+        "Tuesday": { subject: "Lunch", status: "Special", teacher: "-", room: "Cafeteria" },
+        "Wednesday": { subject: "Lunch", status: "Special", teacher: "-", room: "Cafeteria" },
+        "Thursday": { subject: "Lunch", status: "Special", teacher: "-", room: "Cafeteria" },
+        "Friday": { subject: "Lunch", status: "Special", teacher: "-", room: "Cafeteria" },
+    },
+    "1:00-2:00": {
+        "Monday": { subject: "World History", status: "Present", teacher: "Dr. Jones", room: "D-110" },
+        "Tuesday": { subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
+        "Wednesday": { subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
+        "Thursday": { subject: "Chemistry I", status: "Upcoming", teacher: "Dr. Reed", room: "C-105" },
+        "Friday": { subject: "English Lit", status: "Upcoming", teacher: "Dr. Austen", room: "E-201" },
+    },
+    "2:00-3:00": {
+        "Monday": { subject: "Art History", status: "Present", teacher: "Dr. Vinci", room: "F-101" },
+        "Tuesday": { subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
+        "Wednesday": { subject: "World History", status: "Upcoming", teacher: "Dr. Jones", room: "D-110" },
+        "Thursday": { subject: "English Lit", status: "Upcoming", teacher: "Dr. Austen", room: "E-201" },
+        "Friday": { subject: "Sports", status: "Special", teacher: "Coach K", room: "Field" },
+    },
+    "3:00-4:00": {
+        "Monday": { subject: "Free Period", status: "Special", teacher: "-", room: "-" },
+        "Tuesday": { subject: "Free Period", status: "Special", teacher: "-", room: "-" },
+        "Wednesday": { subject: "Free Period", status: "Special", teacher: "-", room: "-" },
+        "Thursday": { subject: "Free Period", status: "Special", teacher: "-", room: "-" },
+        "Friday": { subject: "Sports", status: "Special", teacher: "Coach K", room: "Field" },
+    },
 };
 
-const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-const timeSlots = Object.keys(schedule);
 
-const getSubjectColor = (subject: string) => {
-  switch (subject) {
-    case "Math": return "bg-blue-100 dark:bg-blue-900/50";
-    case "Physics": return "bg-green-100 dark:bg-green-900/50";
-    case "Chemistry": return "bg-yellow-100 dark:bg-yellow-900/50";
-    case "History": return "bg-indigo-100 dark:bg-indigo-900/50";
-    case "English": return "bg-pink-100 dark:bg-pink-900/50";
-    case "Lab": return "bg-purple-100 dark:bg-purple-900/50";
-    case "Sports": return "bg-orange-100 dark:bg-orange-900/50";
-    case "Lunch": return "bg-gray-200 dark:bg-gray-700";
+const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const timeSlots = Object.keys(scheduleData);
+
+const getStatusColor = (status: PeriodStatus, subject: string) => {
+  if (subject === "Lunch" || subject === "Free Period") return "bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300";
+  if (subject === "Lab" || subject === "Sports") return "bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300";
+  
+  switch (status) {
+    case "Present": return "bg-green-100 dark:bg-green-900/60 text-green-700 dark:text-green-300 border-l-4 border-green-500";
+    case "Absent": return "bg-red-100 dark:bg-red-900/60 text-red-700 dark:text-red-300 border-l-4 border-red-500";
+    case "Leave": return "bg-yellow-100 dark:bg-yellow-800/50 text-yellow-700 dark:text-yellow-300 border-l-4 border-yellow-500";
+    case "Upcoming": return "bg-gray-100 dark:bg-gray-800/80 text-gray-500 dark:text-gray-400";
     default: return "bg-gray-100 dark:bg-gray-800";
   }
 };
@@ -33,38 +91,53 @@ const getSubjectColor = (subject: string) => {
 
 export function Timetable() {
   return (
-    <div className="w-full overflow-x-auto">
-      <div className="grid grid-cols-[auto_repeat(5,minmax(100px,1fr))] min-w-[550px]">
-        {/* Header Row */}
-        <div className="font-semibold p-2 border-b border-r sticky left-0 bg-card z-10 text-xs sm:text-sm">Time</div>
-        {days.map((day) => (
-          <div key={day} className="font-semibold p-2 text-center border-b text-xs sm:text-sm">
-            {day}
-          </div>
-        ))}
+    <TooltipProvider>
+      <div className="w-full overflow-x-auto">
+        <div className="grid grid-cols-[auto_repeat(5,minmax(120px,1fr))] min-w-[650px]">
+          {/* Header Row */}
+          <div className="font-semibold p-3 border-b border-r sticky left-0 bg-card z-10 text-xs sm:text-sm text-muted-foreground">Time</div>
+          {days.map((day) => (
+            <div key={day} className="font-semibold p-3 text-center border-b text-xs sm:text-sm text-muted-foreground">
+              {day}
+            </div>
+          ))}
 
-        {/* Schedule Rows */}
-        {timeSlots.map((time) => (
-          <React.Fragment key={time}>
-            <div className="font-medium p-2 border-r text-xs sm:text-sm sticky left-0 bg-card z-10 flex items-center">{time}</div>
-            {days.map((day) => {
-              // @ts-ignore
-              const subject = schedule[time][day] || "Free";
-              return (
-                <div
-                  key={`${time}-${day}`}
-                  className={cn(
-                    "flex items-center justify-center p-2 border-t text-center text-xs sm:text-sm rounded-md m-1 min-h-[60px]",
-                    getSubjectColor(subject)
-                  )}
-                >
-                  {subject}
-                </div>
-              );
-            })}
-          </React.Fragment>
-        ))}
+          {/* Schedule Rows */}
+          {timeSlots.map((time, timeIndex) => (
+            <React.Fragment key={time}>
+              <div className="font-semibold p-2 border-r text-xs sm:text-sm sticky left-0 bg-card z-10 flex items-center justify-center text-muted-foreground">{time}</div>
+              {days.map((day, dayIndex) => {
+                const period = scheduleData[time]?.[day];
+                if (!period) {
+                    return <div key={`${time}-${day}`} className="border-t m-1" />;
+                }
+                
+                return (
+                    <Tooltip key={`${time}-${day}`} delayDuration={150}>
+                        <TooltipTrigger asChild>
+                            <div
+                                className={cn(
+                                    "relative flex flex-col items-center justify-center p-2 border-t text-center rounded-lg m-1 min-h-[70px] transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg animate-fade-in-up",
+                                    getStatusColor(period.status, period.subject)
+                                )}
+                                style={{ animationDelay: `${timeIndex * 50 + dayIndex * 10}ms` }}
+                            >
+                                <p className="font-bold text-sm sm:text-base">{period.subject}</p>
+                                <p className="text-xs sm:text-sm opacity-80">{period.teacher}</p>
+                            </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p className='font-semibold'>{period.subject} ({period.status})</p>
+                            <p className="text-muted-foreground">Teacher: {period.teacher}</p>
+                            <p className="text-muted-foreground">Room: {period.room}</p>
+                        </TooltipContent>
+                    </Tooltip>
+                );
+              })}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }
