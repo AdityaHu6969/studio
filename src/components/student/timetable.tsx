@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import React from 'react';
 
 const schedule = {
   "9:00 - 10:00": { "Monday": "Math", "Tuesday": "Physics", "Wednesday": "Math", "Thursday": "Physics", "Friday": "Math" },
@@ -35,7 +36,7 @@ export function Timetable() {
     <div className="w-full overflow-x-auto">
       <div className="grid grid-cols-[auto_repeat(5,1fr)] min-w-[700px]">
         {/* Header Row */}
-        <div className="font-semibold p-2 border-b border-r">Time</div>
+        <div className="font-semibold p-2 border-b border-r sticky left-0 bg-card z-10">Time</div>
         {days.map((day) => (
           <div key={day} className="font-semibold p-2 text-center border-b">
             {day}
@@ -45,7 +46,7 @@ export function Timetable() {
         {/* Schedule Rows */}
         {timeSlots.map((time) => (
           <React.Fragment key={time}>
-            <div className="font-medium p-2 border-r text-xs sm:text-sm">{time}</div>
+            <div className="font-medium p-2 border-r text-xs sm:text-sm sticky left-0 bg-card z-10">{time}</div>
             {days.map((day) => {
               // @ts-ignore
               const subject = schedule[time][day] || "Free";
@@ -67,6 +68,3 @@ export function Timetable() {
     </div>
   );
 }
-
-// Add React to the scope
-import React from 'react';
