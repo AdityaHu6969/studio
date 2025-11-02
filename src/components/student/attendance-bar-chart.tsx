@@ -31,7 +31,7 @@ export function AttendanceBarChart() {
         accessibilityLayer 
         data={chartData}
         margin={{
-            left: -10,
+            left: 10,
             right: 10,
         }}
       >
