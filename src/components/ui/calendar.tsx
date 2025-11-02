@@ -44,11 +44,10 @@ function Calendar({
         ),
         day_range_end: "day-range-end",
         
-        // Custom classes from user request
         day_selected:
-          "bg-primary text-primary-foreground hover:bg-primary/90 focus:bg-primary/90 day-selected",
+          "bg-primary text-primary-foreground hover:bg-primary/90 focus:bg-primary/90",
         day_today:
-          "bg-transparent ring-1 ring-primary text-primary-foreground day-today",
+          "bg-transparent ring-1 ring-primary",
         day_outside:
           "day-outside text-muted-foreground opacity-50 pointer-events-none",
         day_disabled: "text-muted-foreground opacity-50",
@@ -56,10 +55,7 @@ function Calendar({
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
 
-        // Custom modifier classes
-        day_past: "day-past text-muted-foreground/80",
-        day_future: "day-future text-foreground",
-        day_holiday: "day-holiday text-destructive",
+        day_holiday: "text-destructive",
         ...classNames,
       }}
       components={{

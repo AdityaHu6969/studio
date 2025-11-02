@@ -63,14 +63,11 @@ export default function TimetablePage() {
                     selected={selectedDate}
                     onSelect={handleDateSelect}
                     initialFocus
+                    disabled={(date) => isFuture(date) && !isSameDay(date, new Date())}
                     modifiers={{
-                      past: (date) => isPast(date) && !isSameDay(date, new Date()),
-                      future: (date) => isFuture(date) && !isSameDay(date, new Date()),
                       holiday: (date) => isSunday(date),
                     }}
                     modifiersClassNames={{
-                      past: "day-past",
-                      future: "day-future",
                       selected: "day-selected",
                       today: "day-today",
                       holiday: "day-holiday",
