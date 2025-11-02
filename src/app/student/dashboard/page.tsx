@@ -18,17 +18,16 @@ export default function StudentDashboardPage() {
   const attendanceColor = percentage >= 75 ? "text-primary" : "text-yellow-500";
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 h-full">
-      {/* Left Column */}
-      <div className="flex flex-col gap-6 md:w-1/2">
-        <Card className="animate-fade-in-up">
+    <div className="flex flex-col gap-6 h-full">
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card className="animate-fade-in-up flex flex-col">
           <CardHeader>
             <CardTitle>Welcome, Alex!</CardTitle>
             <CardDescription>Here's a summary of your attendance.</CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="relative h-32 w-32">
+          <CardContent className="flex-grow flex items-center justify-center">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-6 w-full">
+              <div className="relative h-32 w-32 shrink-0">
                 <svg className="w-full h-full" viewBox="0 0 36 36">
                   <path
                     className="text-muted/50"
@@ -60,31 +59,29 @@ export default function StudentDashboardPage() {
             </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Attendance by Subject</CardTitle>
-          </CardHeader>
-          <CardContent>
-             <AttendanceBarChart />
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Right Column */}
-      <div className="flex flex-col gap-6 md:w-1/2">
-        <Card>
+        <Card className="animate-fade-in-up flex flex-col">
           <CardHeader>
             <CardTitle>Attendance Breakdown</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex-grow flex items-center justify-center">
             <AttendancePieChart data={overallAttendance} />
           </CardContent>
         </Card>
-        <Card>
+      </div>
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card className="animate-fade-in-up flex flex-col">
+          <CardHeader>
+            <CardTitle>Attendance by Subject</CardTitle>
+          </CardHeader>
+          <CardContent className="flex-grow">
+             <AttendanceBarChart />
+          </CardContent>
+        </Card>
+        <Card className="animate-fade-in-up flex flex-col">
           <CardHeader>
             <CardTitle>Recent Activity</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 flex-grow">
              <div className="flex items-start justify-between gap-4">
                 <div className="flex-grow">
                     <p className="font-medium">Calculus II</p>
