@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { AttendanceBarChart } from "@/components/student/attendance-bar-chart";
 import { AttendancePieChart } from "@/components/student/attendance-pie-chart";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 
 export default function StudentDashboardPage() {
   const overallAttendance = {
@@ -15,12 +14,11 @@ export default function StudentDashboardPage() {
   const attendanceStatus = percentage >= 75 
     ? "You are currently meeting the attendance requirements. Keep it up!"
     : "Your attendance is low. Please attend classes regularly.";
-  const attendanceColor = percentage >= 75 ? "text-green-500" : "text-yellow-500";
-
+  const attendanceColor = percentage >= 75 ? "text-primary" : "text-yellow-500";
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up">
-      <Card className="md:col-span-2">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <Card className="md:col-span-2 animate-fade-in-up">
         <CardHeader>
           <CardTitle>Welcome, Alex!</CardTitle>
           <CardDescription>Here's a summary of your attendance.</CardDescription>
