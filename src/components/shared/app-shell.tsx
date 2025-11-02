@@ -109,7 +109,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
           </DropdownMenu>
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset>
+      <div className="flex flex-col min-h-screen w-full">
         <header className="flex h-14 items-center gap-4 border-b bg-card px-4 sm:px-6 sticky top-0 z-30">
             <SidebarTrigger className="md:hidden">
               <PanelLeft />
@@ -119,7 +119,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
             </div>
         </header>
         <main className="flex-1 p-4 md:p-6">{children}</main>
-      </SidebarInset>
+      </div>
     </SidebarProvider>
   );
 }
