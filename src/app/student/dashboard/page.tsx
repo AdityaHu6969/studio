@@ -12,14 +12,13 @@ export default function StudentDashboardPage() {
   };
   const percentage = 85;
 
-  const attendanceStatus = percentage >= 75 
+  const attendanceStatus = percentage >= 75
     ? "You are currently meeting the attendance requirements. Keep it up!"
     : "Your attendance is low. Please attend classes regularly.";
   const attendanceColor = percentage >= 75 ? "text-primary" : "text-yellow-500";
 
   return (
-    <div className="flex flex-col gap-6 h-full">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-shrink-0">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         <Card className="animate-fade-in-up w-full">
           <CardHeader>
             <CardTitle>Welcome, Alex!</CardTitle>
@@ -59,21 +58,19 @@ export default function StudentDashboardPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="flex flex-col">
+        <Card>
           <CardHeader>
             <CardTitle>Attendance Breakdown</CardTitle>
           </CardHeader>
-          <CardContent className="flex-1 flex items-center justify-center">
+          <CardContent>
             <AttendancePieChart data={overallAttendance} />
           </CardContent>
         </Card>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1">
-        <Card className="flex flex-col">
+        <Card>
           <CardHeader>
             <CardTitle>Attendance by Subject</CardTitle>
           </CardHeader>
-          <CardContent className="flex-1 flex items-center justify-center">
+          <CardContent>
              <AttendanceBarChart />
           </CardContent>
         </Card>
@@ -104,7 +101,6 @@ export default function StudentDashboardPage() {
              </div>
           </CardContent>
         </Card>
-      </div>
     </div>
   );
 }
