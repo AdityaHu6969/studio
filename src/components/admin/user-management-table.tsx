@@ -43,7 +43,7 @@ export function UserManagementTable() {
             <CardTitle>Users</CardTitle>
             <CardDescription>A list of all users in the system.</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="overflow-x-auto">
             <Table>
             <TableHeader>
                 <TableRow>
@@ -62,13 +62,13 @@ export function UserManagementTable() {
                         <AvatarFallback>{user.name[0]}</AvatarFallback>
                         </Avatar>
                         <div>
-                        <div className="font-medium">{user.name}</div>
+                        <div className="font-medium whitespace-nowrap">{user.name}</div>
                         <div className="text-sm text-muted-foreground">{user.email}</div>
                         </div>
                     </div>
                     </TableCell>
                     <TableCell>
-                        <Badge variant={roleVariant[user.role] || 'secondary'}>{user.role}</Badge>
+                        <Badge variant={roleVariant[user.role] || 'secondary'} className="whitespace-nowrap">{user.role}</Badge>
                     </TableCell>
                     <TableCell className="text-right">
                     <DropdownMenu>

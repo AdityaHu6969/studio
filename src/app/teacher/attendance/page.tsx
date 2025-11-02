@@ -89,7 +89,7 @@ export default function AttendancePage() {
             </Popover>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="overflow-x-auto">
         <form>
           <Table>
             <TableHeader>
@@ -114,7 +114,7 @@ export default function AttendancePage() {
                     </div>
                   </TableCell>
                   <TableCell className="text-right">
-                    <RadioGroup defaultValue="present" className="flex justify-end gap-4">
+                    <RadioGroup defaultValue="present" className="flex flex-col items-end gap-2 sm:flex-row sm:justify-end sm:gap-4">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="present" id={`present-${student.id}`} />
                         <Label htmlFor={`present-${student.id}`} className="flex items-center gap-1 cursor-pointer"><CheckCircle className="h-4 w-4 text-green-500" /> Present</Label>

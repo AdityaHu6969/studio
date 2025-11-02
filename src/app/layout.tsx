@@ -27,7 +27,6 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
       const dashboardUrl = userRole === 'teacher' ? `/${userRole}/attendance` : `/${userRole}/dashboard`;
       router.replace(dashboardUrl);
     } else {
-      // Add a small delay to prevent flash of loading screen on instant loads
       const timer = setTimeout(() => setLoading(false), 150);
       return () => clearTimeout(timer);
     }
@@ -62,7 +61,7 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
-      <body className={cn("font-body antialiased", fontInter.variable)}>
+      <body className={cn("font-body antialiased overflow-x-hidden", fontInter.variable)}>
         {children}
         <Toaster />
       </body>

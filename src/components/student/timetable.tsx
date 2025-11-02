@@ -34,11 +34,11 @@ const getSubjectColor = (subject: string) => {
 export function Timetable() {
   return (
     <div className="w-full overflow-x-auto">
-      <div className="grid grid-cols-[auto_repeat(5,1fr)] min-w-[700px]">
+      <div className="grid grid-cols-[auto_repeat(5,minmax(80px,1fr))] min-w-[500px]">
         {/* Header Row */}
-        <div className="font-semibold p-2 border-b border-r sticky left-0 bg-card z-10">Time</div>
+        <div className="font-semibold p-2 border-b border-r sticky left-0 bg-card z-10 text-xs sm:text-sm">Time</div>
         {days.map((day) => (
-          <div key={day} className="font-semibold p-2 text-center border-b">
+          <div key={day} className="font-semibold p-2 text-center border-b text-xs sm:text-sm">
             {day}
           </div>
         ))}
@@ -46,7 +46,7 @@ export function Timetable() {
         {/* Schedule Rows */}
         {timeSlots.map((time) => (
           <React.Fragment key={time}>
-            <div className="font-medium p-2 border-r text-xs sm:text-sm sticky left-0 bg-card z-10">{time}</div>
+            <div className="font-medium p-2 border-r text-xs sm:text-sm sticky left-0 bg-card z-10 flex items-center">{time}</div>
             {days.map((day) => {
               // @ts-ignore
               const subject = schedule[time][day] || "Free";
@@ -54,7 +54,7 @@ export function Timetable() {
                 <div
                   key={`${time}-${day}`}
                   className={cn(
-                    "flex items-center justify-center p-2 border-t text-center text-xs sm:text-sm rounded-md m-1",
+                    "flex items-center justify-center p-2 border-t text-center text-xs sm:text-sm rounded-md m-1 min-h-[50px]",
                     getSubjectColor(subject)
                   )}
                 >
