@@ -44,7 +44,7 @@ export default function TimetablePage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-           <div className="flex flex-col md:flex-row items-start gap-4">
+           <div className="flex flex-col items-start gap-4 md:flex-row">
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -68,7 +68,7 @@ export default function TimetablePage() {
                   />
                 </PopoverContent>
               </Popover>
-              <Button onClick={handleViewHistory}>View History</Button>
+              <Button onClick={handleViewHistory} className="w-full md:w-auto">View History</Button>
           </div>
         </CardContent>
       </Card>
