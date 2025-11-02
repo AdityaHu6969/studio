@@ -1,27 +1,28 @@
-"use client";
 
-import * as React from "react";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { Period, PeriodStatus } from "./timetable";
-import { format } from 'date-fns';
+'use client';
+
+import React, { useMemo } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+import { Period, PeriodStatus } from './timetable';
+import { format, isSameDay } from 'date-fns';
 
 interface HistoryEntry extends Period {
   date: Date;
 }
 
 const historyData: HistoryEntry[] = [
-  { date: new Date(2024, 6, 17, 9, 0), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
-  { date: new Date(2024, 6, 17, 10, 0), subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
-  { date: new Date(2024, 6, 16, 9, 0), subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
-  { date: new Date(2024, 6, 15, 11, 0), subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
-  { date: new Date(2024, 6, 15, 9, 0), subject: "Calculus II", status: "Absent", teacher: "Dr. Evans", room: "A-101" },
-  { date: new Date(2024, 6, 14, 10, 0), subject: "World History", status: "Leave", teacher: "Dr. Jones", room: "D-110" },
-  { date: new Date(2024, 6, 13, 9, 0), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
-  { date: new Date(2024, 6, 13, 10, 0), subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
-  { date: new Date(2024, 6, 13, 11, 0), subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
-  { date: new Date(2024, 6, 12, 13, 0), subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
+  { date: new Date(2024, 6, 24, 9, 0), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
+  { date: new Date(2024, 6, 24, 10, 0), subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
+  { date: new Date(2024, 6, 23, 9, 0), subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
+  { date: new Date(2024, 6, 22, 11, 0), subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
+  { date: new Date(2024, 6, 22, 9, 0), subject: "Calculus II", status: "Absent", teacher: "Dr. Evans", room: "A-101" },
+  { date: new Date(2024, 6, 21, 10, 0), subject: "World History", status: "Leave", teacher: "Dr. Jones", room: "D-110" },
+  { date: new Date(2024, 6, 20, 9, 0), subject: "Calculus II", status: "Present", teacher: "Dr. Evans", room: "A-101" },
+  { date: new Date(2024, 6, 20, 10, 0), subject: "Chemistry I", status: "Present", teacher: "Dr. Reed", room: "C-105" },
+  { date: new Date(2024, 6, 20, 11, 0), subject: "English Lit", status: "Present", teacher: "Dr. Austen", room: "E-201" },
+  { date: new Date(2024, 6, 19, 13, 0), subject: "Physics I", status: "Present", teacher: "Dr. Smith", room: "B-203" },
 ];
 
 const getBadgeVariant = (status: PeriodStatus) => {
@@ -41,32 +42,48 @@ const getBadgeClass = (status: PeriodStatus) => {
     }
 }
 
+interface TimetableHistoryViewProps {
+  selectedDate?: Date;
+}
 
-export function TimetableHistoryView() {
+export function TimetableHistoryView({ selectedDate }: TimetableHistoryViewProps) {
+  const filteredHistory = useMemo(() => {
+    if (!selectedDate) {
+      return [];
+    }
+    return historyData.filter(item => isSameDay(item.date, selectedDate));
+  }, [selectedDate]);
+
   return (
     <ScrollArea className="h-96 w-full rounded-md border animate-fade-in-up">
       <div className="p-4">
-        {historyData.map((item, index) => (
-          <React.Fragment key={index}>
-            <div className="flex items-start justify-between gap-4 py-3">
-              <div className="flex-grow">
-                <p className="font-semibold">{item.subject}</p>
-                <p className="text-sm text-muted-foreground">
-                  {format(item.date, "eeee, MMMM d, yyyy 'at' h:mm a")}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Teacher: {item.teacher} | Room: {item.room}
-                </p>
+        {filteredHistory.length > 0 ? (
+          filteredHistory.map((item, index) => (
+            <React.Fragment key={index}>
+              <div className="flex items-start justify-between gap-4 py-3">
+                <div className="flex-grow">
+                  <p className="font-semibold">{item.subject}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {format(item.date, "h:mm a")}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Teacher: {item.teacher} | Room: {item.room}
+                  </p>
+                </div>
+                <div className="flex-shrink-0">
+                  <Badge variant={getBadgeVariant(item.status)} className={getBadgeClass(item.status)}>
+                    {item.status}
+                  </Badge>
+                </div>
               </div>
-              <div className="flex-shrink-0">
-                <Badge variant={getBadgeVariant(item.status)} className={getBadgeClass(item.status)}>
-                  {item.status}
-                </Badge>
-              </div>
-            </div>
-            {index < historyData.length - 1 && <Separator />}
-          </React.Fragment>
-        ))}
+              {index < filteredHistory.length - 1 && <Separator />}
+            </React.Fragment>
+          ))
+        ) : (
+          <div className="flex h-full min-h-[200px] items-center justify-center text-muted-foreground">
+            <p>No attendance records found for this date.</p>
+          </div>
+        )}
       </div>
     </ScrollArea>
   );
