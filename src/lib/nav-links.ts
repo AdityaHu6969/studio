@@ -15,7 +15,7 @@ export const studentNavLinks: NavLink[] = [
   },
   {
     href: "/student/timetable",
-    label: "Timetable",
+    label: "Attendance & History",
     icon: CalendarClock,
   },
   {
