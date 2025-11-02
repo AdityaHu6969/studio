@@ -9,28 +9,21 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
+import { format, isFuture, isPast, isSameDay, isSunday } from 'date-fns';
 
 export default function TimetablePage() {
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
-  const [confirmedDate, setConfirmedDate] = React.useState<Date | undefined>(undefined);
+  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(new Date());
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
-    const today = new Date();
-    setSelectedDate(today);
-    setConfirmedDate(today);
     setIsMounted(true);
   }, []);
 
   const handleDateSelect = (date: Date | undefined) => {
+    if (date && isFuture(date) && !isSameDay(date, new Date())) return;
     setSelectedDate(date);
     setIsPopoverOpen(false); // Close popover on date select
-  };
-
-  const handleViewHistory = () => {
-    setConfirmedDate(selectedDate);
   };
 
   return (
@@ -69,21 +62,31 @@ export default function TimetablePage() {
                     mode="single"
                     selected={selectedDate}
                     onSelect={handleDateSelect}
-                    disabled={(date) => date > new Date()}
                     initialFocus
+                    modifiers={{
+                      past: (date) => isPast(date) && !isSameDay(date, new Date()),
+                      future: (date) => isFuture(date) && !isSameDay(date, new Date()),
+                      holiday: (date) => isSunday(date),
+                    }}
+                    modifiersClassNames={{
+                      past: "day-past",
+                      future: "day-future",
+                      selected: "day-selected",
+                      today: "day-today",
+                      holiday: "day-holiday",
+                    }}
                   />
                 </PopoverContent>
               </Popover>
-              <Button onClick={handleViewHistory} className="w-full md:w-auto">View History</Button>
           </div>
         </CardContent>
       </Card>
        <Card className="mt-6">
         <CardHeader>
-            <CardTitle>Records for {isMounted && confirmedDate ? format(confirmedDate, "PPP") : '...'}</CardTitle>
+            <CardTitle>Records for {isMounted && selectedDate ? format(selectedDate, "PPP") : '...'}</CardTitle>
         </CardHeader>
         <CardContent>
-          {isMounted && <TimetableHistoryView selectedDate={confirmedDate} />}
+          {isMounted && <TimetableHistoryView selectedDate={selectedDate} />}
         </CardContent>
       </Card>
     </div>
