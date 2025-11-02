@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { LayoutDashboard, CalendarCheck, Users, ShieldCheck, Settings, CalendarClock } from "lucide-react";
+import { LayoutDashboard, CalendarCheck, Users, ShieldCheck, Settings, CalendarClock, BookUser } from "lucide-react";
 
 export interface NavLink {
   href: string;
@@ -17,6 +17,11 @@ export const studentNavLinks: NavLink[] = [
     href: "/student/timetable",
     label: "Timetable",
     icon: CalendarClock,
+  },
+  {
+    href: "/student/courses",
+    label: "Courses & Faculty",
+    icon: BookUser,
   }
 ];
 
