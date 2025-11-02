@@ -12,11 +12,12 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 
 export default function TimetablePage() {
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
     setIsMounted(true);
+    setDate(new Date());
   }, []);
 
   return (
@@ -60,7 +61,7 @@ export default function TimetablePage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <TimetableHistoryView selectedDate={date} />
+          {isMounted && <TimetableHistoryView selectedDate={date} />}
         </CardContent>
       </Card>
     </div>
