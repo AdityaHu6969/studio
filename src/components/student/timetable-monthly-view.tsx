@@ -54,7 +54,7 @@ export function TimetableMonthlyView() {
           }
         }}
         components={{
-          DayContent: ({ date, displayMonth, ...props }) => (
+          DayContent: ({ date, displayMonth, activeModifiers, ...props }) => (
             <div
               {...props}
               className={cn(
@@ -62,7 +62,7 @@ export function TimetableMonthlyView() {
                 getDayStatusClass(date)
               )}
             >
-              {props.children}
+              {(props.children as React.ReactElement)?.props.children}
             </div>
           ),
         }}
