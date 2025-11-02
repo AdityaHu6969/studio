@@ -16,10 +16,15 @@ export default function StudentDashboardPage() {
     ? "You are currently meeting the attendance requirements. Keep it up!"
     : "Your attendance is low. Please attend classes regularly.";
   const attendanceColor = percentage >= 75 ? "text-primary" : "text-yellow-500";
+  
+  const recentActivity = [
+    { subject: "Calculus II", teacher: "Dr. Evans", status: "Present", time: "2 hours ago" },
+    { subject: "Physics I", teacher: "Dr. Smith", status: "Absent", time: "Yesterday" },
+    { subject: "History", teacher: "Dr. Jones", status: "Present", time: "2 days ago" },
+  ];
 
   return (
-    <div className="flex flex-col gap-6 h-full">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 h-full">
         <Card className="animate-fade-in-up flex flex-col">
           <CardHeader>
             <CardTitle>Welcome, Alex!</CardTitle>
@@ -80,39 +85,20 @@ export default function StudentDashboardPage() {
             <CardTitle>Recent Activity</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 flex-grow">
-             <div className="flex items-start justify-between gap-4">
-                <div className="flex-grow">
-                    <p className="font-medium">Calculus II</p>
-                    <p className="text-sm text-muted-foreground">Marked present by Dr. Evans</p>
+             {recentActivity.map((activity, index) => (
+                <div key={index} className="flex items-start justify-between gap-4">
+                    <div className="flex-grow">
+                        <p className="font-medium">{activity.subject}</p>
+                        <p className="text-sm text-muted-foreground">Marked by {activity.teacher}</p>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                        <Badge variant={activity.status === 'Present' ? 'secondary' : 'destructive'}>{activity.status}</Badge>
+                        <p className="text-xs text-muted-foreground mt-1">{activity.time}</p>
+                    </div>
                 </div>
-                <div className="text-right flex-shrink-0">
-                    <Badge variant="secondary">Present</Badge>
-                    <p className="text-xs text-muted-foreground mt-1">2 hours ago</p>
-                </div>
-             </div>
-             <div className="flex items-start justify-between gap-4">
-                <div className="flex-grow">
-                    <p className="font-medium">Physics I</p>
-                    <p className="text-sm text-muted-foreground">Marked absent by Dr. Smith</p>
-                </div>
-                <div className="text-right flex-shrink-0">
-                    <Badge variant="destructive">Absent</Badge>
-                    <p className="text-xs text-muted-foreground mt-1">Yesterday</p>
-                </div>
-             </div>
-             <div className="flex items-start justify-between gap-4">
-                <div className="flex-grow">
-                    <p className="font-medium">History</p>
-                    <p className="text-sm text-muted-foreground">Marked present by Dr. Jones</p>
-                </div>
-                <div className="text-right flex-shrink-0">
-                    <Badge variant="secondary">Present</Badge>
-                    <p className="text-xs text-muted-foreground mt-1">2 days ago</p>
-                </div>
-             </div>
+             ))}
           </CardContent>
         </Card>
-      </div>
     </div>
   );
 }
