@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -13,29 +13,38 @@ const fontInter = Inter({
   variable: "--font-inter",
 });
 
-// Since we are using client-side hooks, we can't export metadata directly.
-// This is a known limitation when a layout needs to be a client component.
-// export const metadata: Metadata = {
-//   title: "Patel College Hub",
-//   description: "Your one-stop portal for college activities.",
-//   manifest: "/manifest.json",
-// };
-
 function RootLayoutContent({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // This effect runs on the client and handles redirection based on login state.
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const userRole = localStorage.getItem('userRole');
 
-    // If there's a logged-in user and they are on the root or login page, redirect them to their dashboard.
     if (isLoggedIn && userRole && (pathname === '/' || pathname.startsWith('/login'))) {
       const dashboardUrl = userRole === 'teacher' ? `/${userRole}/attendance` : `/${userRole}/dashboard`;
       router.replace(dashboardUrl);
+    } else {
+      setLoading(false);
     }
   }, [pathname, router]);
+
+  if (loading && (pathname === '/' || pathname.startsWith('/login'))) {
+    return (
+      <html lang="en" suppressHydrationWarning>
+        <head>
+            <title>Patel College Hub</title>
+            <meta name="description" content="Your one-stop portal for college activities." />
+            <meta name="theme-color" content="#4B0082" />
+            <link rel="manifest" href="/manifest.json" />
+        </head>
+        <body className="flex min-h-screen items-center justify-center bg-background">
+            <div>Loading...</div>
+        </body>
+      </html>
+    );
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>
