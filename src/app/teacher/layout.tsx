@@ -1,3 +1,5 @@
+"use client";
+
 import { AppShell } from "@/components/shared/app-shell";
 import { teacherNavLinks } from "@/lib/nav-links";
 
