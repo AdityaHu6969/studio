@@ -7,6 +7,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
+import { Loader } from '@/components/shared/loader';
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -26,7 +27,9 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
       const dashboardUrl = userRole === 'teacher' ? `/${userRole}/attendance` : `/${userRole}/dashboard`;
       router.replace(dashboardUrl);
     } else {
-      setLoading(false);
+      // Add a small delay to prevent flash of loading screen on instant loads
+      const timer = setTimeout(() => setLoading(false), 150);
+      return () => clearTimeout(timer);
     }
   }, [pathname, router]);
 
@@ -35,13 +38,13 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
       <html lang="en" suppressHydrationWarning>
         <head>
             <title>Patel College Hub</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <meta name="description" content="Your one-stop portal for college activities." />
             <meta name="theme-color" content="#4B0082" />
             <link rel="manifest" href="/manifest.json" />
         </head>
         <body className="flex min-h-screen items-center justify-center bg-background">
-            <div>Loading...</div>
+            <Loader />
         </body>
       </html>
     );
@@ -51,7 +54,7 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <title>Patel College Hub</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Your one-stop portal for college activities." />
         <meta name="theme-color" content="#4B0082" />
         <link rel="manifest" href="/manifest.json" />
