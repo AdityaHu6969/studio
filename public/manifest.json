@@ -1,0 +1,21 @@
+{
+  "name": "Patel College Hub",
+  "short_name": "College Hub",
+  "description": "Patel College Hub - Your one-stop portal for college activities.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#E6E6FA",
+  "theme_color": "#4B0082",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "student-avatar-1",
+      "description": "A placeholder avatar for a student.",
+      "imageUrl": "https://images.unsplash.com/photo-1621274790572-7c32596bc67f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdHVkZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYyMDExOTc1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "student portrait"
+    },
+    {
+      "id": "student-avatar-2",
+      "description": "A placeholder avatar for a student.",
+      "imageUrl": "https://images.unsplash.com/photo-1623605931891-d5b95ee98459?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwZXJzb24lMjBzbWlsaW5nfGVufDB8fHx8MTc2MjA3MDcxN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person smiling"
+    },
+    {
+      "id": "student-avatar-3",
+      "description": "A placeholder avatar for a student.",
+      "imageUrl": "https://images.unsplash.com/photo-1646470350098-7966d0486d7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdHVkZW50JTIwZmFjZXxlbnwwfHx8fDE3NjIwMTc4OTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "student face"
+    },
+    {
+      "id": "teacher-avatar-1",
+      "description": "A placeholder avatar for a teacher.",
+      "imageUrl": "https://images.unsplash.com/photo-1750924718882-33ee16ddf3a8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx0ZWFjaGVyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYyMDkxMDY1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "teacher portrait"
+    },
+    {
+      "id": "admin-avatar-1",
+      "description": "A placeholder avatar for an admin.",
+      "imageUrl": "https://images.unsplash.com/photo-1655249493799-9cee4fe983bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwcm9mZXNzaW9uYWwlMjBwZXJzb258ZW58MHx8fHwxNzYyMTA1MzEzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional person"
+    }
+  ]
 }

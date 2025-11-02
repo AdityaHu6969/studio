@@ -1,0 +1,61 @@
+"use client"
+
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
+
+const chartData = [
+  { subject: "Math", attendance: 92 },
+  { subject: "Science", attendance: 85 },
+  { subject: "History", attendance: 95 },
+  { subject: "English", attendance: 88 },
+  { subject: "Art", attendance: 100 },
+  { subject: "P.E.", attendance: 78 },
+];
+
+const chartConfig = {
+  attendance: {
+    label: "Attendance %",
+    color: "hsl(var(--primary))",
+  },
+};
+
+export function AttendanceBarChart() {
+  return (
+    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+      <BarChart 
+        accessibilityLayer 
+        data={chartData}
+        margin={{
+            left: -20,
+        }}
+      >
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="subject"
+          tickLine={false}
+          tickMargin={10}
+          axisLine={false}
+          tickFormatter={(value) => value.slice(0, 3)}
+        />
+         <YAxis
+          domain={[50, 100]}
+          tickFormatter={(tick) => `${tick}%`}
+        />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <Bar dataKey="attendance" fill="var(--color-attendance)" radius={4} />
+      </BarChart>
+    </ChartContainer>
+  );
+}
