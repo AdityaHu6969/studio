@@ -47,7 +47,7 @@ export function UserManagementTable() {
             <Table>
             <TableHeader>
                 <TableRow>
-                <TableHead>User</TableHead>
+                <TableHead className="min-w-[200px]">User</TableHead>
                 <TableHead>Role</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
                 </TableRow>

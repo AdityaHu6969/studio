@@ -34,7 +34,7 @@ const getSubjectColor = (subject: string) => {
 export function Timetable() {
   return (
     <div className="w-full overflow-x-auto">
-      <div className="grid grid-cols-[auto_repeat(5,minmax(80px,1fr))] min-w-[500px]">
+      <div className="grid grid-cols-[auto_repeat(5,minmax(100px,1fr))] min-w-[550px]">
         {/* Header Row */}
         <div className="font-semibold p-2 border-b border-r sticky left-0 bg-card z-10 text-xs sm:text-sm">Time</div>
         {days.map((day) => (
@@ -54,7 +54,7 @@ export function Timetable() {
                 <div
                   key={`${time}-${day}`}
                   className={cn(
-                    "flex items-center justify-center p-2 border-t text-center text-xs sm:text-sm rounded-md m-1 min-h-[50px]",
+                    "flex items-center justify-center p-2 border-t text-center text-xs sm:text-sm rounded-md m-1 min-h-[60px]",
                     getSubjectColor(subject)
                   )}
                 >

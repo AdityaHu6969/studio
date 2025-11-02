@@ -94,7 +94,7 @@ export default function AttendancePage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Student</TableHead>
+                <TableHead className="min-w-[150px]">Student</TableHead>
                 <TableHead className="text-right">Status</TableHead>
               </TableRow>
             </TableHeader>
@@ -113,7 +113,7 @@ export default function AttendancePage() {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>
                     <RadioGroup defaultValue="present" className="flex flex-col items-end gap-2 sm:flex-row sm:justify-end sm:gap-4">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="present" id={`present-${student.id}`} />
