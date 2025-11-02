@@ -27,8 +27,8 @@ export default function StudentDashboardPage() {
   ];
 
   return (
-    <div className="flex flex-col h-full w-full gap-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1">
+    <div className="w-full h-full flex flex-col">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
         
         <Card className="animate-fade-in-up flex flex-col">
           <CardHeader>
@@ -71,6 +71,7 @@ export default function StudentDashboardPage() {
         <Card className="animate-fade-in-up flex flex-col">
           <CardHeader>
             <CardTitle>Attendance Breakdown</CardTitle>
+            <CardDescription>Present vs. Absent classes.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-grow items-center justify-center">
             <AttendancePieChart data={overallAttendance} />
@@ -80,6 +81,7 @@ export default function StudentDashboardPage() {
         <Card className="animate-fade-in-up flex flex-col">
           <CardHeader>
             <CardTitle>Attendance by Subject</CardTitle>
+            <CardDescription>Your attendance percentage per subject.</CardDescription>
           </CardHeader>
           <CardContent className="flex-grow">
              <AttendanceBarChart />
@@ -89,6 +91,7 @@ export default function StudentDashboardPage() {
         <Card className="animate-fade-in-up flex flex-col">
           <CardHeader>
             <CardTitle>Recent Activity</CardTitle>
+            <CardDescription>Your latest attendance records.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-grow flex-col space-y-4">
              {recentActivity.map((activity, index) => (
@@ -105,6 +108,7 @@ export default function StudentDashboardPage() {
              ))}
           </CardContent>
         </Card>
+
       </div>
     </div>
   );
