@@ -101,7 +101,7 @@ export default function StudentDashboardPage() {
               <CardDescription>Your latest attendance records.</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-grow flex-col justify-center space-y-4 p-6">
-              {recentActivity.slice(0, 2).map((activity, index) => (
+              {recentActivity.slice(0, 4).map((activity, index) => (
                   <div key={index} className="flex items-start justify-between gap-4">
                       <div className="flex-grow">
                           <p className="font-medium">{activity.subject}</p>
