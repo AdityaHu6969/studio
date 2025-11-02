@@ -29,11 +29,12 @@ export default function StudentDashboardPage() {
   ];
 
   return (
-    <div className="flex h-full flex-col p-4 sm:p-6 lg:p-8">
-      <div className="grid flex-1 grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-        {/* First Column */}
-        <div className="flex flex-col gap-6 lg:gap-8">
-          <Card className="animate-fade-in-up flex flex-col">
+    <div className="flex h-full flex-col">
+      <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
+        <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-rows-2 lg:gap-8">
+          
+          {/* Welcome Card */}
+          <Card className="animate-fade-in-up flex flex-col lg:row-span-1">
             <CardHeader>
               <CardTitle>Welcome, Alex!</CardTitle>
               <CardDescription>Here's a summary of your attendance.</CardDescription>
@@ -70,19 +71,9 @@ export default function StudentDashboardPage() {
                 </div>
             </CardContent>
           </Card>
-          <Card className="animate-fade-in-up flex flex-col [animation-delay:200ms]">
-            <CardHeader>
-              <CardTitle>Attendance by Subject</CardTitle>
-              <CardDescription>Your attendance percentage per subject.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <AttendanceBarChart />
-            </CardContent>
-          </Card>
-        </div>
-        {/* Second Column */}
-        <div className="flex flex-col gap-6 lg:gap-8">
-          <Card className="animate-fade-in-up flex flex-col [animation-delay:100ms]">
+          
+          {/* Attendance Breakdown */}
+          <Card className="animate-fade-in-up flex flex-col [animation-delay:100ms] lg:row-span-1">
             <CardHeader>
               <CardTitle>Attendance Breakdown</CardTitle>
               <CardDescription>Present vs. Absent classes.</CardDescription>
@@ -91,13 +82,26 @@ export default function StudentDashboardPage() {
               <AttendancePieChart data={overallAttendance} />
             </CardContent>
           </Card>
-          <Card className="animate-fade-in-up flex flex-col [animation-delay:300ms]">
+
+          {/* Attendance by Subject */}
+          <Card className="animate-fade-in-up flex flex-col [animation-delay:200ms] lg:row-span-1">
+            <CardHeader>
+              <CardTitle>Attendance by Subject</CardTitle>
+              <CardDescription>Your attendance percentage per subject.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-grow">
+              <AttendanceBarChart />
+            </CardContent>
+          </Card>
+          
+          {/* Recent Activity */}
+          <Card className="animate-fade-in-up flex flex-col [animation-delay:300ms] lg:row-span-1">
             <CardHeader>
               <CardTitle>Recent Activity</CardTitle>
               <CardDescription>Your latest attendance records.</CardDescription>
             </CardHeader>
-            <CardContent className="flex-grow space-y-4 overflow-y-auto p-6">
-              {recentActivity.slice(0, 4).map((activity, index) => (
+            <CardContent className="flex flex-grow flex-col justify-center space-y-4 p-6">
+              {recentActivity.slice(0, 2).map((activity, index) => (
                   <div key={index} className="flex items-start justify-between gap-4">
                       <div className="flex-grow">
                           <p className="font-medium">{activity.subject}</p>
@@ -111,8 +115,9 @@ export default function StudentDashboardPage() {
               ))}
             </CardContent>
           </Card>
+
         </div>
-      </div>
+      </main>
     </div>
   );
 }
