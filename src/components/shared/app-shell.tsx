@@ -83,7 +83,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
               <Button variant="ghost" className="w-full justify-start gap-2 h-12 px-2">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                  <AvatarFallback>{user.name.split(' ').pop()?.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className="text-left truncate">
                   <p className="font-medium truncate">{user.name}</p>
@@ -118,7 +118,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
               <h1 className="text-lg font-semibold">{user.role} Portal</h1>
             </div>
         </header>
-        <main className="flex-1 p-4 sm:p-6">{children}</main>
+        <main className="flex-1 p-4 sm:p-6 overflow-x-hidden">{children}</main>
       </div>
     </SidebarProvider>
   );
