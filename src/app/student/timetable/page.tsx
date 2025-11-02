@@ -14,18 +14,14 @@ import { format, isFuture, isSameDay, isSunday } from 'date-fns';
 export default function TimetablePage() {
   const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(new Date());
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
-  const [isMounted, setIsMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const handleDateSelect = (date: Date | undefined) => {
     if (!date) return;
-    // We only disable future dates in the calendar itself.
-    // The logic to show "Upcoming" is in TimetableHistoryView.
+    if (isFuture(date) && !isSameDay(date, new Date())) {
+        return; 
+    }
     setSelectedDate(date);
-    setIsPopoverOpen(false); // Close popover on date select
+    setIsPopoverOpen(false);
   };
 
   return (
@@ -56,7 +52,7 @@ export default function TimetablePage() {
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {isMounted && selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+                    {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
@@ -70,8 +66,6 @@ export default function TimetablePage() {
                       holiday: (date) => isSunday(date),
                     }}
                     modifiersClassNames={{
-                      selected: "day-selected",
-                      today: "day-today",
                       holiday: "day-holiday",
                     }}
                   />
@@ -82,10 +76,10 @@ export default function TimetablePage() {
       </Card>
        <Card className="mt-6">
         <CardHeader>
-            <CardTitle>Records for {isMounted && selectedDate ? format(selectedDate, "PPP") : '...'}</CardTitle>
+            <CardTitle>Records for {selectedDate ? format(selectedDate, "PPP") : '...'}</CardTitle>
         </CardHeader>
         <CardContent>
-          {isMounted && <TimetableHistoryView selectedDate={selectedDate} />}
+          <TimetableHistoryView selectedDate={selectedDate} />
         </CardContent>
       </Card>
     </div>
