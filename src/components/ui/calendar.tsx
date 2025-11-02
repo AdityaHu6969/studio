@@ -3,7 +3,7 @@
 
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import { DayPicker, Matcher } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -48,7 +48,7 @@ function Calendar({
         day_today:
           "bg-accent text-accent-foreground",
         day_outside:
-          "day-outside text-muted-foreground opacity-50",
+          "day-outside text-muted-foreground opacity-50 pointer-events-none",
         day_disabled: "text-muted-foreground opacity-50",
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
