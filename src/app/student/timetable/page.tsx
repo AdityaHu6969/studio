@@ -12,8 +12,14 @@ import { cn } from '@/lib/utils';
 import { format, isFuture, isSameDay, isSunday } from 'date-fns';
 
 export default function TimetablePage() {
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+    setSelectedDate(new Date());
+  }, []);
 
   const handleDateSelect = (date: Date | undefined) => {
     if (!date) return;
@@ -23,6 +29,10 @@ export default function TimetablePage() {
     setSelectedDate(date);
     setIsPopoverOpen(false);
   };
+  
+  if (!isMounted) {
+    return null; // or a loading skeleton
+  }
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
