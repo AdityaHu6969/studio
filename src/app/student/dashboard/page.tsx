@@ -16,12 +16,12 @@ export default function StudentDashboardPage() {
       <Card>
         <CardHeader>
           <CardTitle>Welcome, Alex!</CardTitle>
-          <CardDescription>Here&apos;s a summary of your attendance.</CardDescription>
+          <CardDescription>Here's a summary of your attendance.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
             <p className="text-5xl font-bold">{percentage}%</p>
-            <div className="flex flex-col">
+            <div className="flex flex-col text-center sm:text-left">
               <p className="text-lg font-medium">Overall Attendance</p>
               <p className="text-sm text-muted-foreground">
                 You are currently meeting the attendance requirements. Keep it up!
