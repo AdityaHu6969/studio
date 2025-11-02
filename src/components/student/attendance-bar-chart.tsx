@@ -3,13 +3,6 @@
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -51,6 +44,7 @@ export function AttendanceBarChart() {
           tickFormatter={(value) => value.slice(0, 3)}
         />
          <YAxis
+          type="number"
           domain={[50, 100]}
           tickFormatter={(tick) => `${tick}%`}
           width={35}
