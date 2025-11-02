@@ -33,12 +33,13 @@ const chartConfig = {
 
 export function AttendanceBarChart() {
   return (
-    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+    <ChartContainer config={chartConfig} className="min-h-[200px] w-full h-[250px]">
       <BarChart 
         accessibilityLayer 
         data={chartData}
         margin={{
-            left: -20,
+            left: 10,
+            right: 10,
         }}
       >
         <CartesianGrid vertical={false} />
@@ -52,6 +53,7 @@ export function AttendanceBarChart() {
          <YAxis
           domain={[50, 100]}
           tickFormatter={(tick) => `${tick}%`}
+          width={25}
         />
         <ChartTooltip content={<ChartTooltipContent />} />
         <Bar dataKey="attendance" fill="var(--color-attendance)" radius={4} />

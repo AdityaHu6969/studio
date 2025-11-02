@@ -45,7 +45,7 @@ export default function StudentDashboardPage() {
             <CardTitle>Attendance by Subject</CardTitle>
             <CardDescription>Your attendance percentage in different subjects this semester.</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pl-0">
             <AttendanceBarChart />
           </CardContent>
         </Card>
@@ -55,24 +55,24 @@ export default function StudentDashboardPage() {
           <CardTitle>Recent Activity</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-           <div className="flex items-center justify-between">
-              <div>
+           <div className="flex items-start justify-between gap-4">
+              <div className="flex-grow">
                   <p className="font-medium">Calculus II</p>
                   <p className="text-sm text-muted-foreground">Marked present by Dr. Evans</p>
               </div>
-              <div className="text-right">
+              <div className="text-right flex-shrink-0">
                   <Badge variant="secondary">Present</Badge>
-                  <p className="text-xs text-muted-foreground">2 hours ago</p>
+                  <p className="text-xs text-muted-foreground mt-1">2 hours ago</p>
               </div>
            </div>
-           <div className="flex items-center justify-between">
-              <div>
+           <div className="flex items-start justify-between gap-4">
+              <div className="flex-grow">
                   <p className="font-medium">Physics I</p>
                   <p className="text-sm text-muted-foreground">Marked absent by Dr. Smith</p>
               </div>
-              <div className="text-right">
+              <div className="text-right flex-shrink-0">
                   <Badge variant="destructive">Absent</Badge>
-                  <p className="text-xs text-muted-foreground">Yesterday</p>
+                  <p className="text-xs text-muted-foreground mt-1">Yesterday</p>
               </div>
            </div>
         </CardContent>
