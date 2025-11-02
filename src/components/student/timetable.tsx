@@ -88,16 +88,9 @@ export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 export const timeSlots = Object.keys(scheduleData);
 
 export const getStatusColor = (status: PeriodStatus, subject: string) => {
-  const baseStyle = "bg-card";
-  
-  if (subject === "Lunch" || subject === "Free Period") return "bg-muted/50 text-muted-foreground";
-  if (subject === "Lab" || subject === "Sports") return `${baseStyle} border-l-4 border-sky-500`;
-  
-  switch (status) {
-    case "Present": return `${baseStyle} border-l-4 border-green-500`;
-    case "Absent": return `${baseStyle} border-l-4 border-red-500`;
-    case "Leave": return `${baseStyle} border-l-4 border-yellow-500`;
-    case "Upcoming": return "bg-card/50 text-muted-foreground border-l-4 border-gray-400";
-    default: return baseStyle;
+  if (subject === "Lunch" || subject === "Free Period" || status === 'Upcoming') {
+    return "text-muted-foreground";
   }
+  
+  return "";
 };

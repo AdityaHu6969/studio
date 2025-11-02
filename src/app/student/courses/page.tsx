@@ -67,7 +67,7 @@ export default function TimetablePage() {
               {days.map((day, dayIndex) => {
                 const period = scheduleData[time]?.[day];
                 if (!period) {
-                  return <div key={`${time}-${day}`} className="border-b border-r m-1" />;
+                  return <div key={`${time}-${day}`} className="border-b border-r" />;
                 }
 
                 const isClickable = period.subject !== "Lunch" && period.subject !== "Free Period";
@@ -77,8 +77,8 @@ export default function TimetablePage() {
                     key={`${time}-${day}`}
                     onClick={() => handlePeriodClick(period, day, time)}
                     className={cn(
-                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg m-1 min-h-[80px] transition-all duration-300 ease-in-out transform border-b border-r",
-                      isClickable && "cursor-pointer hover:scale-105 hover:shadow-xl",
+                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg m-1 min-h-[80px] transition-all duration-200 ease-in-out border-b border-r",
+                      isClickable && "cursor-pointer hover:scale-[1.02] hover:shadow-sm",
                       getStatusColor(period.status, period.subject)
                     )}
                     style={{ animation: `fade-in-up 0.5s ${timeIndex * 0.05 + dayIndex * 0.02}s ease-out forwards`, opacity: 0 }}
