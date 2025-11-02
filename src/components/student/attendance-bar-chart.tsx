@@ -38,7 +38,7 @@ export function AttendanceBarChart() {
         accessibilityLayer 
         data={chartData}
         margin={{
-            left: 10,
+            left: -10,
             right: 10,
         }}
       >
@@ -53,7 +53,7 @@ export function AttendanceBarChart() {
          <YAxis
           domain={[50, 100]}
           tickFormatter={(tick) => `${tick}%`}
-          width={25}
+          width={35}
         />
         <ChartTooltip content={<ChartTooltipContent />} />
         <Bar dataKey="attendance" fill="var(--color-attendance)" radius={4} />

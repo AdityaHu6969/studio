@@ -48,7 +48,7 @@ export default function StudentDashboardPage() {
             <CardTitle>Attendance by Subject</CardTitle>
             <CardDescription>Your attendance percentage this semester.</CardDescription>
           </CardHeader>
-          <CardContent className="pl-0">
+          <CardContent>
              <AttendanceBarChart />
           </CardContent>
         </Card>
