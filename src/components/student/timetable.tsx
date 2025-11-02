@@ -103,6 +103,6 @@ export const getStatusColor = (status: PeriodStatus, subject: string) => {
     case "Special":
       return "border-l-4 border-purple-500";
     default:
-      return "";
+      return "bg-card";
   }
 };

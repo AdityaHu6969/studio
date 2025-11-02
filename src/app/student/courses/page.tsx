@@ -50,12 +50,12 @@ export default function TimetablePage() {
         <h1 className="text-3xl font-bold tracking-tight">Weekly Timetable</h1>
         <p className="text-muted-foreground">Your weekly class schedule. Click a class for more details.</p>
       </div>
-      <div className="w-full overflow-x-auto rounded-lg border">
-        <div className="grid grid-cols-[auto_repeat(5,1fr)]">
+      <div className="w-full overflow-x-auto rounded-lg border bg-card/20 p-2">
+        <div className="grid grid-cols-[auto_repeat(5,1fr)] gap-1">
           {/* Header Row */}
-          <div className="font-semibold p-3 border-b border-r sticky left-0 bg-card z-10 text-xs sm:text-sm text-muted-foreground">Time</div>
+          <div className="font-semibold p-3 sticky left-0 z-10 text-xs sm:text-sm text-muted-foreground">Time</div>
           {days.map((day) => (
-            <div key={day} className="font-semibold p-3 text-center border-b text-xs sm:text-sm text-muted-foreground">
+            <div key={day} className="font-semibold p-3 text-center text-xs sm:text-sm text-muted-foreground">
               {day}
             </div>
           ))}
@@ -63,11 +63,11 @@ export default function TimetablePage() {
           {/* Schedule Rows */}
           {timeSlots.map((time, timeIndex) => (
             <React.Fragment key={time}>
-              <div className="font-semibold p-2 border-b border-r text-xs sm:text-sm sticky left-0 bg-card z-10 flex items-center justify-center text-muted-foreground">{time}</div>
+              <div className="font-semibold p-2 text-xs sm:text-sm sticky left-0 z-10 flex items-center justify-center text-muted-foreground">{time}</div>
               {days.map((day, dayIndex) => {
                 const period = scheduleData[time]?.[day];
                 if (!period) {
-                  return <div key={`${time}-${day}`} className="border-b border-r" />;
+                  return <div key={`${time}-${day}`} className="" />;
                 }
 
                 const isClickable = period.subject !== "Lunch" && period.subject !== "Free Period";
@@ -77,8 +77,8 @@ export default function TimetablePage() {
                     key={`${time}-${day}`}
                     onClick={() => handlePeriodClick(period, day, time)}
                     className={cn(
-                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg m-1 min-h-[80px] transition-all duration-200 ease-in-out border-b border-r bg-card/50",
-                      isClickable && "cursor-pointer hover:scale-[1.02] hover:shadow-lg hover:bg-card",
+                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg min-h-[80px] transition-all duration-200 ease-in-out bg-card",
+                      isClickable && "cursor-pointer hover:scale-[1.03] hover:shadow-xl",
                       getStatusColor(period.status, period.subject)
                     )}
                     style={{ animation: `fade-in-up 0.5s ${timeIndex * 0.05 + dayIndex * 0.02}s ease-out forwards`, opacity: 0 }}
