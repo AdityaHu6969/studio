@@ -88,15 +88,16 @@ export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 export const timeSlots = Object.keys(scheduleData);
 
 export const getStatusColor = (status: PeriodStatus, subject: string) => {
-  if (subject === "Lunch" || subject === "Free Period") return "bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300";
-  if (subject === "Lab" || subject === "Sports") return "bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300";
+  const baseStyle = "bg-card";
+  
+  if (subject === "Lunch" || subject === "Free Period") return "bg-muted/50 text-muted-foreground";
+  if (subject === "Lab" || subject === "Sports") return `${baseStyle} border-l-4 border-sky-500`;
   
   switch (status) {
-    case "Present": return "bg-green-100 dark:bg-green-900/60 text-green-700 dark:text-green-300 border-l-4 border-green-500";
-    case "Absent": return "bg-red-100 dark:bg-red-900/60 text-red-700 dark:text-red-300 border-l-4 border-red-500";
-    case "Leave": return "bg-yellow-100 dark:bg-yellow-800/50 text-yellow-700 dark:text-yellow-300 border-l-4 border-yellow-500";
-    case "Upcoming": return "bg-gray-100 dark:bg-gray-800/80 text-gray-500 dark:text-gray-400";
-    default: return "bg-gray-100 dark:bg-gray-800";
+    case "Present": return `${baseStyle} border-l-4 border-green-500`;
+    case "Absent": return `${baseStyle} border-l-4 border-red-500`;
+    case "Leave": return `${baseStyle} border-l-4 border-yellow-500`;
+    case "Upcoming": return "bg-card/50 text-muted-foreground border-l-4 border-gray-400";
+    default: return baseStyle;
   }
 };
-

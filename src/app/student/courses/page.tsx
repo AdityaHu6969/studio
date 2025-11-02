@@ -51,7 +51,7 @@ export default function TimetablePage() {
         <p className="text-muted-foreground">Your weekly class schedule. Click a class for more details.</p>
       </div>
       <div className="w-full overflow-x-auto rounded-lg border">
-        <div className="grid grid-cols-[auto_repeat(5,minmax(140px,1fr))] min-w-[700px] animate-fade-in-up">
+        <div className="grid grid-cols-[auto_repeat(5,1fr)]">
           {/* Header Row */}
           <div className="font-semibold p-3 border-b border-r sticky left-0 bg-card z-10 text-xs sm:text-sm text-muted-foreground">Time</div>
           {days.map((day) => (
@@ -63,11 +63,11 @@ export default function TimetablePage() {
           {/* Schedule Rows */}
           {timeSlots.map((time, timeIndex) => (
             <React.Fragment key={time}>
-              <div className="font-semibold p-2 border-r text-xs sm:text-sm sticky left-0 bg-card z-10 flex items-center justify-center text-muted-foreground">{time}</div>
+              <div className="font-semibold p-2 border-b border-r text-xs sm:text-sm sticky left-0 bg-card z-10 flex items-center justify-center text-muted-foreground">{time}</div>
               {days.map((day, dayIndex) => {
                 const period = scheduleData[time]?.[day];
                 if (!period) {
-                  return <div key={`${time}-${day}`} className="border-t m-1" />;
+                  return <div key={`${time}-${day}`} className="border-b border-r m-1" />;
                 }
 
                 const isClickable = period.subject !== "Lunch" && period.subject !== "Free Period";
@@ -77,7 +77,7 @@ export default function TimetablePage() {
                     key={`${time}-${day}`}
                     onClick={() => handlePeriodClick(period, day, time)}
                     className={cn(
-                      "relative flex flex-col items-center justify-center p-2 border-t text-center rounded-lg m-1 min-h-[70px] transition-all duration-300 ease-in-out transform",
+                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg m-1 min-h-[80px] transition-all duration-300 ease-in-out transform border-b border-r",
                       isClickable && "cursor-pointer hover:scale-105 hover:shadow-xl",
                       getStatusColor(period.status, period.subject)
                     )}
