@@ -59,7 +59,7 @@ export function UserManagementTable() {
                     <div className="flex items-center gap-3">
                         <Avatar className="h-9 w-9">
                         <AvatarImage src={user.avatar} alt={user.name} />
-                        <AvatarFallback>{user.name[0]}</AvatarFallback>
+                        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div>
                         <div className="font-medium whitespace-nowrap">{user.name}</div>

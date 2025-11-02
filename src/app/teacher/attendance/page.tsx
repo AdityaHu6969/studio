@@ -105,7 +105,7 @@ export default function AttendancePage() {
                     <div className="flex items-center gap-3">
                       <Avatar className="h-9 w-9">
                         <AvatarImage src={student.avatar} alt={student.name} />
-                        <AvatarFallback>{student.name[0]}</AvatarFallback>
+                        <AvatarFallback>{student.name.charAt(0)}</AvatarFallback>
                       </Avatar>
                       <div>
                         <div className="font-medium">{student.name}</div>
