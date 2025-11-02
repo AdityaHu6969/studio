@@ -66,6 +66,7 @@ export function TimetableHistoryView({ selectedDate }: TimetableHistoryViewProps
 
   const isFutureDate = useMemo(() => {
     if (!selectedDate) return false;
+    // Check if the date is in the future, but not today
     return isFuture(selectedDate) && !isSameDay(selectedDate, new Date());
   }, [selectedDate]);
 
