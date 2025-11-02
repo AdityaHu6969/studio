@@ -33,7 +33,7 @@ function LoginContent() {
         <ArrowLeft className="h-4 w-4" />
         Back to role selection
       </Link>
-      <Card className="mx-auto w-full max-w-sm shadow-2xl">
+      <Card className="w-full max-w-sm shadow-2xl">
         <CardHeader>
           <CardTitle className="text-2xl font-headline">{roleName} Login</CardTitle>
           <CardDescription>
