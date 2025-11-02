@@ -14,6 +14,7 @@ import { format } from 'date-fns';
 export default function TimetablePage() {
   const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
   const [confirmedDate, setConfirmedDate] = React.useState<Date | undefined>(undefined);
+  const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -22,6 +23,11 @@ export default function TimetablePage() {
     setConfirmedDate(today);
     setIsMounted(true);
   }, []);
+
+  const handleDateSelect = (date: Date | undefined) => {
+    setSelectedDate(date);
+    setIsPopoverOpen(false); // Close popover on date select
+  };
 
   const handleViewHistory = () => {
     setConfirmedDate(selectedDate);
@@ -45,7 +51,7 @@ export default function TimetablePage() {
         </CardHeader>
         <CardContent>
            <div className="flex flex-col items-start gap-4 md:flex-row">
-              <Popover>
+              <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant={"outline"}
@@ -62,7 +68,7 @@ export default function TimetablePage() {
                   <Calendar
                     mode="single"
                     selected={selectedDate}
-                    onSelect={setSelectedDate}
+                    onSelect={handleDateSelect}
                     disabled={(date) => date > new Date()}
                     initialFocus
                   />
