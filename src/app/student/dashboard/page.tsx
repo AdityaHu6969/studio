@@ -18,8 +18,10 @@ export default function StudentDashboardPage() {
   const attendanceColor = percentage >= 75 ? "text-primary" : "text-yellow-500";
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-        <Card className="animate-fade-in-up w-full">
+    <div className="flex flex-col md:flex-row gap-6 h-full">
+      {/* Left Column */}
+      <div className="flex flex-col gap-6 md:w-1/2">
+        <Card className="animate-fade-in-up">
           <CardHeader>
             <CardTitle>Welcome, Alex!</CardTitle>
             <CardDescription>Here's a summary of your attendance.</CardDescription>
@@ -60,18 +62,22 @@ export default function StudentDashboardPage() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Attendance Breakdown</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <AttendancePieChart data={overallAttendance} />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
             <CardTitle>Attendance by Subject</CardTitle>
           </CardHeader>
           <CardContent>
              <AttendanceBarChart />
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Right Column */}
+      <div className="flex flex-col gap-6 md:w-1/2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Attendance Breakdown</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <AttendancePieChart data={overallAttendance} />
           </CardContent>
         </Card>
         <Card>
@@ -101,6 +107,7 @@ export default function StudentDashboardPage() {
              </div>
           </CardContent>
         </Card>
+      </div>
     </div>
   );
 }
