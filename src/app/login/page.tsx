@@ -26,6 +26,11 @@ function LoginContent() {
   };
   
   const roleName = role.charAt(0).toUpperCase() + role.slice(1);
+  const defaultPassword = {
+    admin: 'temp_god_pass_123',
+    teacher: 'temp_teacher_pass_456',
+    student: 'temp_student_pass_abc'
+  }[role] || '';
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
@@ -60,7 +65,7 @@ function LoginContent() {
                   Forgot password?
                 </Link>
               </div>
-              <Input id="password" type="password" required autoComplete="current-password" />
+              <Input id="password" type="password" required autoComplete="current-password" defaultValue={defaultPassword} />
             </div>
             <Button type="submit" className="w-full">
               Login
