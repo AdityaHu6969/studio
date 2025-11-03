@@ -1,5 +1,6 @@
+
 import { AppShell } from "@/components/shared/app-shell";
-import { studentNavLinks } from "@/lib/nav-links";
+import { StudentNav } from "@/lib/nav-links";
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function StudentLayout({
@@ -14,5 +15,5 @@ export default function StudentLayout({
     role: "Student",
   };
 
-  return <AppShell navLinks={studentNavLinks} user={user}>{children}</AppShell>;
+  return <AppShell nav={<StudentNav />} user={user}>{children}</AppShell>;
 }

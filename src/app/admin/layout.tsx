@@ -1,8 +1,9 @@
+
 "use client";
 
 import React, { useState } from 'react';
 import { AppShell } from "@/components/shared/app-shell";
-import { adminNavLinks, godAdminNavLinks } from "@/lib/nav-links";
+import { AdminNav, GodAdminNav } from "@/lib/nav-links";
 import { PinLock } from "@/components/admin/pin-lock";
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
@@ -17,13 +18,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     role: isAdminRole ? "Admin" : "God Admin",
   };
   
-  const navLinks = isAdminRole ? adminNavLinks : godAdminNavLinks;
+  const nav = isAdminRole ? <AdminNav /> : <GodAdminNav />;
 
   return (
     <>
       <PinLock isOpen={isLocked} onUnlock={() => setIsLocked(false)} />
       {!isLocked && (
-        <AppShell navLinks={navLinks} user={user}>
+        <AppShell nav={nav} user={user}>
           {children}
         </AppShell>
       )}

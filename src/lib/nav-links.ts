@@ -1,5 +1,12 @@
+
+'use client';
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { LucideIcon } from "lucide-react";
 import { LayoutDashboard, CalendarCheck, Users, ShieldCheck, Settings, CalendarClock, BookUser, Calendar } from "lucide-react";
+import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
+import { useSidebar } from "@/components/ui/sidebar";
 
 export interface NavLink {
   href: string;
@@ -7,7 +14,7 @@ export interface NavLink {
   icon: LucideIcon;
 }
 
-export const studentNavLinks: NavLink[] = [
+const studentNavLinks: NavLink[] = [
   {
     href: "/student/dashboard",
     label: "Dashboard",
@@ -25,7 +32,7 @@ export const studentNavLinks: NavLink[] = [
   }
 ];
 
-export const teacherNavLinks: NavLink[] = [
+const teacherNavLinks: NavLink[] = [
   {
     href: "/teacher/attendance",
     label: "Attendance",
@@ -33,7 +40,7 @@ export const teacherNavLinks: NavLink[] = [
   },
 ];
 
-export const adminNavLinks: NavLink[] = [
+const adminNavLinks: NavLink[] = [
   {
     href: "/admin/dashboard",
     label: "User Management",
@@ -46,7 +53,7 @@ export const adminNavLinks: NavLink[] = [
   },
 ];
 
-export const godAdminNavLinks: NavLink[] = [
+const godAdminNavLinks: NavLink[] = [
   ...adminNavLinks,
   {
     href: "#",
@@ -54,3 +61,48 @@ export const godAdminNavLinks: NavLink[] = [
     icon: ShieldCheck,
   },
 ];
+
+function NavLinks({ links }: { links: NavLink[] }) {
+  const pathname = usePathname();
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const handleLinkClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  };
+
+  return (
+    <SidebarMenu>
+      {links.map((link) => (
+        <SidebarMenuItem key={link.href}>
+          <Link href={link.href} className="w-full" onClick={handleLinkClick}>
+            <SidebarMenuButton
+              isActive={pathname === link.href}
+              tooltip={link.label}
+            >
+              <link.icon />
+              <span>{link.label}</span>
+            </SidebarMenuButton>
+          </Link>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
+  );
+}
+
+export function StudentNav() {
+    return <NavLinks links={studentNavLinks} />;
+}
+
+export function TeacherNav() {
+    return <NavLinks links={teacherNavLinks} />;
+}
+
+export function AdminNav() {
+    return <NavLinks links={adminNavLinks} />;
+}
+
+export function GodAdminNav() {
+    return <NavLinks links={godAdminNavLinks} />;
+}

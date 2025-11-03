@@ -1,6 +1,6 @@
+
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -16,27 +16,20 @@ import {
   Sidebar,
   SidebarHeader,
   SidebarContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
   SidebarFooter,
   SidebarTrigger,
-  useSidebar,
 } from "@/components/ui/sidebar";
 import { GraduationCap, LogOut, PanelLeft } from "lucide-react";
-import type { NavLink } from "@/lib/nav-links";
 
-interface AppShellProps {
+interface AppShellContentProps {
   children: React.ReactNode;
-  navLinks: NavLink[];
+  nav: React.ReactNode;
   user: { name: string; email: string; avatar: string; role: string };
   onLogout?: () => void;
 }
 
-export function AppShellContent({ children, navLinks, user, onLogout }: AppShellProps) {
-  const pathname = usePathname();
+export function AppShellContent({ children, nav, user, onLogout }: AppShellContentProps) {
   const router = useRouter();
-  const { isMobile, setOpenMobile } = useSidebar();
 
   const handleLogout = () => {
     if (onLogout) {
@@ -45,12 +38,6 @@ export function AppShellContent({ children, navLinks, user, onLogout }: AppShell
       localStorage.removeItem('isLoggedIn');
       localStorage.removeItem('userRole');
       router.push('/');
-    }
-  };
-
-  const handleLinkClick = () => {
-    if (isMobile) {
-      setOpenMobile(false);
     }
   };
 
@@ -64,21 +51,7 @@ export function AppShellContent({ children, navLinks, user, onLogout }: AppShell
           </div>
         </SidebarHeader>
         <SidebarContent>
-          <SidebarMenu>
-            {navLinks.map((link) => (
-              <SidebarMenuItem key={link.href}>
-                <Link href={link.href} className="w-full" onClick={handleLinkClick}>
-                  <SidebarMenuButton
-                    isActive={pathname === link.href}
-                    tooltip={link.label}
-                  >
-                    <link.icon />
-                    <span>{link.label}</span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
+            {nav}
         </SidebarContent>
         <SidebarFooter>
           <DropdownMenu>
