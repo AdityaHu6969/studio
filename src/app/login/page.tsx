@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,16 +9,14 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 
-function LoginContent() {
+export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const role = searchParams.get("role") || "student"; // Default to student
+  const role = searchParams.get("role") || "student";
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you'd perform authentication here.
-    // For this demo, we'll set a flag in localStorage to persist session.
     localStorage.setItem('isLoggedIn', 'true');
     localStorage.setItem('userRole', role);
 
@@ -100,14 +98,5 @@ function LoginContent() {
         </CardContent>
       </Card>
     </div>
-  );
-}
-
-
-export default function LoginPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <LoginContent />
-    </Suspense>
   );
 }
