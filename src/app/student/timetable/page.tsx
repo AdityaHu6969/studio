@@ -5,20 +5,25 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { TimetableHistoryView } from "@/components/student/timetable-history-view";
 import { ListCollapse, Calendar as CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
+import { Calendar, CalendarProps } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { format, isFuture, isSameDay, isSaturday, isSunday, startOfDay } from 'date-fns';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-const officialHolidays = [
-  new Date(2025, 7, 15), // Independence Day (month is 0-indexed)
-  new Date(2025, 9, 21), // Diwali
-  new Date(2025, 11, 25), // Christmas
+const officialHolidays: { date: Date; description: string }[] = [
+  { date: new Date(2025, 7, 15), description: "Independence Day" }, // month is 0-indexed
+  { date: new Date(2025, 9, 21), description: "Diwali" },
+  { date: new Date(2025, 11, 25), description: "Christmas" },
 ];
 
-const isOfficialHoliday = (date: Date) => {
+const getHolidayDescription = (date: Date): string | undefined => {
   const startOfDate = startOfDay(date);
-  return officialHolidays.some(holiday => isSameDay(startOfDate, holiday));
+  return officialHolidays.find(holiday => isSameDay(startOfDate, holiday.date))?.description;
+};
+
+const isOfficialHoliday = (date: Date) => {
+  return !!getHolidayDescription(date);
 };
 
 export default function AttendanceHistoryPage() {
@@ -35,8 +40,36 @@ export default function AttendanceHistoryPage() {
     setSelectedDate(date);
     setIsPopoverOpen(false); // Close popover after selection
   };
-
+  
   const selectedDateForDisplay = selectedDate || new Date();
+
+  const CustomDay: CalendarProps['components']['DayContent'] = ({ date, ...props }) => {
+    const holidayDescription = getHolidayDescription(date);
+    const isWeekend = isSaturday(date) || isSunday(date);
+    const isAnOfficialHoliday = isOfficialHoliday(date);
+    
+    const day = <div className="relative flex h-full w-full items-center justify-center">
+      {format(date, 'd')}
+      {isAnOfficialHoliday && <div className="absolute bottom-1 h-1 w-1 rounded-full bg-orange-500" />}
+      {!isAnOfficialHoliday && isWeekend && <div className="absolute bottom-1 h-1 w-1 rounded-full bg-destructive" />}
+    </div>;
+
+    if (holidayDescription) {
+      return (
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger asChild>{day}</TooltipTrigger>
+            <TooltipContent>
+              <p>{holidayDescription}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    }
+    
+    return day;
+  };
+
   
   if (selectedDate === undefined) {
     // Render a skeleton loading state on the server and initial client render
@@ -116,6 +149,7 @@ export default function AttendanceHistoryPage() {
                     onSelect={handleDateSelect}
                     initialFocus
                     disabled={isFuture}
+                    components={{ DayContent: CustomDay }}
                     modifiers={{
                       holiday: (date) => (isSunday(date) || isSaturday(date)) && !isOfficialHoliday(date),
                       officialHoliday: isOfficialHoliday,
