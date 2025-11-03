@@ -8,7 +8,6 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isLocked, setIsLocked] = useState(true);
-  // This would come from auth context in a real app
   const [isAdminRole, setIsAdminRole] = useState(true); 
 
   const user = {
@@ -20,17 +19,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   
   const navLinks = isAdminRole ? adminNavLinks : godAdminNavLinks;
 
-  const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userRole');
-    window.location.href = '/';
-  };
-
   return (
     <>
       <PinLock isOpen={isLocked} onUnlock={() => setIsLocked(false)} />
       {!isLocked && (
-        <AppShell navLinks={navLinks} user={user} onLogout={handleLogout}>
+        <AppShell navLinks={navLinks} user={user}>
           {children}
         </AppShell>
       )}

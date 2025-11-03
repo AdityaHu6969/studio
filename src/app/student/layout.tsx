@@ -1,5 +1,3 @@
-"use client";
-
 import { AppShell } from "@/components/shared/app-shell";
 import { studentNavLinks } from "@/lib/nav-links";
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -16,11 +14,5 @@ export default function StudentLayout({
     role: "Student",
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userRole');
-    window.location.href = '/';
-  };
-
-  return <AppShell navLinks={studentNavLinks} user={user} onLogout={handleLogout}>{children}</AppShell>;
+  return <AppShell navLinks={studentNavLinks} user={user}>{children}</AppShell>;
 }
