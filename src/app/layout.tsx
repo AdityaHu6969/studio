@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useEffect, useState, Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -15,6 +16,7 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     const userRole = localStorage.getItem('userRole');
+    
     const isAuthPage = pathname === '/' || pathname.startsWith('/login') || pathname.startsWith('/set-password') || pathname.startsWith('/otp-verify');
 
     if (!isLoggedIn && !isAuthPage) {
@@ -22,7 +24,8 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
     } else if (isLoggedIn && userRole) {
       const expectedPath = `/${userRole}`;
       if (!pathname.startsWith(expectedPath) && !isAuthPage) {
-        router.replace(expectedPath.includes('student') ? '/student/dashboard' : expectedPath.includes('teacher') ? '/teacher/attendance' : '/admin/dashboard');
+         const dashboardUrl = role === 'teacher' ? `/${role}/attendance` : `/${role}/dashboard`;
+         router.push(dashboardUrl);
       } else {
         setIsVerified(true);
       }
@@ -31,10 +34,8 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
     }
   }, [pathname, router]);
 
-  // A suspense boundary will show the fallback UI instantly on navigation
-  // while the server renders the next page.
   return (
-    <html lang="en" suppressHydrationWarning>
+    <>
       <head>
         <title>Patel College Hub</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,12 +45,12 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
         <link rel="apple-touch-icon" href="/icon-192x192.png"></link>
       </head>
       <body className={cn("font-body antialiased")}>
-        <Suspense fallback={<body className="flex min-h-screen items-center justify-center bg-background"><Loader /></body>}>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-background"><Loader /></div>}>
           {isVerified ? children : <div className="flex min-h-screen items-center justify-center bg-background"><Loader /></div>}
         </Suspense>
         <Toaster />
       </body>
-    </html>
+    </>
   );
 }
 
@@ -59,6 +60,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // We wrap the main logic in a component that can use hooks.
-  return <RootLayoutContent>{children}</RootLayoutContent>;
+  return (
+    <html lang="en" suppressHydrationWarning>
+        <RootLayoutContent>{children}</RootLayoutContent>
+    </html>
+  );
 }
