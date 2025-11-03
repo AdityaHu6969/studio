@@ -68,7 +68,7 @@ export default function RoleSelectionPage() {
       <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3 max-w-4xl w-full">
         {roles.map((role) => (
           <Link href={role.href} key={role.name} className="group">
-            <Card className="h-full transform transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-xl group-hover:border-primary">
+            <Card className="h-full transform transition-all duration-200 ease-in-out group-hover:scale-105 group-hover:shadow-xl group-hover:border-primary">
               <CardHeader className="items-center text-center p-4 sm:p-6">
                 {role.icon}
                 <CardTitle className="mt-4 text-xl sm:text-2xl font-semibold">{role.name}</CardTitle>

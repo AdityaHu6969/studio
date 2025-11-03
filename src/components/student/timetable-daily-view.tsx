@@ -47,15 +47,15 @@ export function TimetableDailyView() {
                                 key={`${time}-${day}`}
                                 onClick={() => handlePeriodClick(period, day, time)}
                                 className={cn(
-                                    "flex items-center gap-4 p-3 rounded-lg transition-all duration-200 ease-in-out",
+                                    "flex items-center gap-4 p-3 rounded-lg transition-all duration-200 ease-in-out animate-fade-in-up",
                                     isClickable && "cursor-pointer hover:scale-[1.02] hover:shadow-md",
                                     getSubjectColor(period.subject)
                                 )}
-                                style={{ animation: `fade-in-up 0.5s ${timeIndex * 0.05}s ease-out forwards`, opacity: 0 }}
+                                style={{ animationDelay: `${timeIndex * 50}ms` }}
                             >
-                                <div className="flex flex-col items-center justify-center w-16 text-center">
+                                <div className="flex flex-col items-center justify-center w-20 text-center">
                                     <Clock className="h-4 w-4 mb-1 opacity-80" />
-                                    <span className="text-xs font-medium opacity-80">{time.split('-')[0]}</span>
+                                    <span className="text-xs font-medium opacity-80">{time}</span>
                                 </div>
                                 <div className="flex-grow">
                                     <p className="font-bold">{period.subject}</p>
