@@ -87,22 +87,21 @@ export const scheduleData: Record<string, Record<string, Period>> = {
 export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 export const timeSlots = Object.keys(scheduleData);
 
-export const getStatusColor = (status: PeriodStatus, subject: string) => {
+const subjectColors: Record<string, string> = {
+  "Calculus II": "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300",
+  "Physics I": "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300",
+  "Chemistry I": "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300",
+  "World History": "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300",
+  "English Lit": "bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300",
+  "Art History": "bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300",
+  "Lab": "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300",
+  "Sports": "bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300",
+};
+
+
+export const getSubjectColor = (subject: string) => {
   if (subject === "Lunch" || subject === "Free Period") {
-    return "bg-muted/30 text-muted-foreground";
+    return "bg-card/50";
   }
-  switch (status) {
-    case "Present":
-      return "bg-green-500/10 text-green-700 dark:bg-green-500/10 dark:text-green-400";
-    case "Absent":
-      return "bg-red-500/10 text-red-700 dark:bg-red-500/10 dark:text-red-400";
-    case "Leave":
-      return "bg-yellow-500/10 text-yellow-700 dark:bg-yellow-500/10 dark:text-yellow-400";
-    case "Upcoming":
-      return "bg-gray-500/10 text-gray-600 dark:bg-gray-500/10 dark:text-gray-400";
-    case "Special":
-      return "bg-purple-500/10 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400";
-    default:
-      return "bg-card";
-  }
+  return subjectColors[subject] || "bg-gray-100 text-gray-800 dark:bg-gray-900/50 dark:text-gray-300";
 };

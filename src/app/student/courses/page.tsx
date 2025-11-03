@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Mail, Phone } from "lucide-react";
-import { scheduleData, days, timeSlots, getStatusColor, Period, Teacher, Course } from '@/components/student/timetable';
+import { scheduleData, days, timeSlots, getSubjectColor, Period, Teacher, Course } from '@/components/student/timetable';
 import { cn } from '@/lib/utils';
 
 const teachers: Record<string, Teacher> = {
@@ -81,9 +81,9 @@ export default function TimetablePage() {
                     key={`${time}-${day}`}
                     onClick={() => handlePeriodClick(period, day, time)}
                     className={cn(
-                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg min-h-[80px] transition-all duration-200 ease-in-out bg-card/50",
+                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg min-h-[80px] transition-all duration-200 ease-in-out",
                       isClickable && "cursor-pointer hover:scale-[1.03] hover:shadow-xl",
-                      getStatusColor(period.status, period.subject)
+                      getSubjectColor(period.subject)
                     )}
                     style={{ animation: `fade-in-up 0.5s ${timeIndex * 0.05 + dayIndex * 0.02}s ease-out forwards`, opacity: 0 }}
                   >
