@@ -1,8 +1,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { AttendanceBarChart } from "@/components/student/attendance-bar-chart";
-import { AttendancePieChart } from "@/components/student/attendance-pie-chart";
 import { Badge } from "@/components/ui/badge";
+import { DashboardClientContent } from "@/components/student/dashboard-client-content";
+
 
 export default function StudentDashboardPage() {
   const overallAttendance = {
@@ -68,26 +68,7 @@ export default function StudentDashboardPage() {
                 </CardContent>
             </Card>
 
-            <Card className="animate-fade-in-up flex flex-col [animation-delay:100ms]">
-                <CardHeader>
-                    <CardTitle>Attendance Breakdown</CardTitle>
-                    <CardDescription>Present vs. Absent classes.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-grow items-center justify-center">
-                    <AttendancePieChart data={overallAttendance} />
-                </CardContent>
-            </Card>
-
-            {/* Attendance by Subject & Recent Activity */}
-            <Card className="animate-fade-in-up flex flex-col [animation-delay:200ms]">
-                <CardHeader>
-                    <CardTitle>Attendance by Subject</CardTitle>
-                    <CardDescription>Your attendance percentage per subject.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                    <AttendanceBarChart />
-                </CardContent>
-            </Card>
+            <DashboardClientContent overallAttendance={overallAttendance} />
 
             <Card className="animate-fade-in-up flex flex-col [animation-delay:300ms]">
                 <CardHeader>

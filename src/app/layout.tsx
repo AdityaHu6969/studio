@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -15,41 +15,18 @@ const fontInter = Inter({
 });
 
 function RootLayoutContent({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
   const pathname = usePathname();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(pathname === '/' || pathname.startsWith('/login'));
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    const userRole = localStorage.getItem('userRole');
+    // This effect handles showing the loader on initial auth pages,
+    // but we let the nested layouts/pages handle their own redirects and content switching.
+    // The main purpose is to avoid a flash of unstyled or incorrect content.
     const isAuthPage = pathname === '/' || pathname.startsWith('/login');
+    setLoading(isAuthPage);
+  }, [pathname]);
 
-    if (isLoggedIn && userRole && isAuthPage) {
-      const dashboardUrl = userRole === 'teacher' ? `/${userRole}/attendance` : `/${userRole}/dashboard`;
-      router.replace(dashboardUrl);
-      // Still loading until redirect is complete
-    } else {
-      setLoading(false);
-    }
-  }, [pathname, router]);
-
-  if (loading && (pathname === '/' || pathname.startsWith('/login'))) {
-    return (
-      <html lang="en" suppressHydrationWarning>
-        <head>
-            <title>Patel College Hub</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <meta name="description" content="Your one-stop portal for college activities." />
-            <meta name="theme-color" content="#4B0082" />
-            <link rel="manifest" href="/manifest.json" />
-        </head>
-        <body className="flex min-h-screen items-center justify-center bg-background">
-            <Loader />
-        </body>
-      </html>
-    );
-  }
-
+  // A suspense boundary can be useful here if children trigger suspense
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -58,17 +35,17 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
         <meta name="description" content="Your one-stop portal for college activities." />
         <meta name="theme-color" content="#4B0082" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={cn("font-body antialiased", fontInter.variable)}>
-        {children}
+        <Suspense fallback={<body className="flex min-h-screen items-center justify-center bg-background"><Loader /></body>}>
+          {children}
+        </Suspense>
         <Toaster />
       </body>
     </html>
   );
 }
+
 
 export default function RootLayout({
   children,
