@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { User, UserCog, Shield } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const roles = [
   {
@@ -31,29 +29,6 @@ const roles = [
 ];
 
 export default function RoleSelectionPage() {
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    const userRole = localStorage.getItem('userRole');
-
-    if (isLoggedIn === 'true' && userRole) {
-      const dashboardUrl = userRole === 'teacher' ? `/${userRole}/attendance` : `/${userRole}/dashboard`;
-      router.replace(dashboardUrl);
-    } else {
-      setLoading(false);
-    }
-  }, [router]);
-
-  if (loading) {
-    return (
-      <main className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
-        <div>Loading...</div>
-      </main>
-    );
-  }
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <div className="text-center mb-8 sm:mb-12">

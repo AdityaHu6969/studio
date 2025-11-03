@@ -22,13 +22,14 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const userRole = localStorage.getItem('userRole');
+    const isAuthPage = pathname === '/' || pathname.startsWith('/login');
 
-    if (isLoggedIn && userRole && (pathname === '/' || pathname.startsWith('/login'))) {
+    if (isLoggedIn && userRole && isAuthPage) {
       const dashboardUrl = userRole === 'teacher' ? `/${userRole}/attendance` : `/${userRole}/dashboard`;
       router.replace(dashboardUrl);
+      // Still loading until redirect is complete
     } else {
-      const timer = setTimeout(() => setLoading(false), 150);
-      return () => clearTimeout(timer);
+      setLoading(false);
     }
   }, [pathname, router]);
 
