@@ -1,14 +1,17 @@
 'use client';
 
 import * as React from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Mail, Phone } from "lucide-react";
+import { Mail, Phone, Clock } from "lucide-react";
 import { scheduleData, days, timeSlots, getSubjectColor, Period, Teacher, Course, teachers, courseDetails } from '@/components/student/timetable';
 import { cn } from '@/lib/utils';
+import { Card, CardContent } from '../ui/card';
 
-export function TimetableWeeklyView() {
+export function TimetableDailyView() {
   const [selectedPeriod, setSelectedPeriod] = React.useState<{ period: Period, day: string, time: string } | null>(null);
+  const [activeTab, setActiveTab] = React.useState(days[new Date().getDay() - 1] || days[0]);
 
   const handlePeriodClick = (period: Period, day: string, time: string) => {
     if (period.subject !== "Lunch" && period.subject !== "Free Period") {
@@ -21,49 +24,52 @@ export function TimetableWeeklyView() {
 
   return (
     <>
-      <div className="w-full overflow-x-auto rounded-lg border bg-card p-2 animate-fade-in-up">
-        <div className="grid grid-cols-[auto_repeat(5,1fr)] gap-1 min-w-[600px]">
-          {/* Header Row */}
-          <div className="font-semibold p-3 sticky left-0 z-10 text-xs sm:text-sm text-muted-foreground">Time</div>
-          {days.map((day) => (
-            <div key={day} className="font-semibold p-3 text-center text-xs sm:text-sm text-muted-foreground">
-              {day}
-            </div>
+      <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full animate-fade-in-up">
+        <TabsList className="grid w-full grid-cols-5 h-auto">
+          {days.map(day => (
+            <TabsTrigger key={day} value={day} className="text-xs px-1">
+              {day.substring(0, 3)}
+            </TabsTrigger>
           ))}
+        </TabsList>
+        {days.map(day => (
+          <TabsContent key={day} value={day}>
+            <Card>
+                <CardContent className="p-4 space-y-3">
+                    {timeSlots.map((time, timeIndex) => {
+                        const period = scheduleData[time]?.[day];
+                        if (!period) return null;
+                        
+                        const isClickable = period.subject !== "Lunch" && period.subject !== "Free Period";
 
-          {/* Schedule Rows */}
-          {timeSlots.map((time, timeIndex) => (
-            <React.Fragment key={time}>
-              <div className="font-semibold p-2 text-xs sm:text-sm sticky left-0 z-10 flex items-center justify-center text-muted-foreground">{time}</div>
-              {days.map((day, dayIndex) => {
-                const period = scheduleData[time]?.[day];
-                if (!period) {
-                  return <div key={`${time}-${day}`} className="" />;
-                }
+                        return (
+                            <div
+                                key={`${time}-${day}`}
+                                onClick={() => handlePeriodClick(period, day, time)}
+                                className={cn(
+                                    "flex items-center gap-4 p-3 rounded-lg transition-all duration-200 ease-in-out",
+                                    isClickable && "cursor-pointer hover:scale-[1.02] hover:shadow-md",
+                                    getSubjectColor(period.subject)
+                                )}
+                                style={{ animation: `fade-in-up 0.5s ${timeIndex * 0.05}s ease-out forwards`, opacity: 0 }}
+                            >
+                                <div className="flex flex-col items-center justify-center w-16 text-center">
+                                    <Clock className="h-4 w-4 mb-1 opacity-80" />
+                                    <span className="text-xs font-medium opacity-80">{time.split('-')[0]}</span>
+                                </div>
+                                <div className="flex-grow">
+                                    <p className="font-bold">{period.subject}</p>
+                                    <p className="text-sm opacity-80">{period.teacher}</p>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </CardContent>
+            </Card>
+          </TabsContent>
+        ))}
+      </Tabs>
 
-                const isClickable = period.subject !== "Lunch" && period.subject !== "Free Period";
-
-                return (
-                  <div
-                    key={`${time}-${day}`}
-                    onClick={() => handlePeriodClick(period, day, time)}
-                    className={cn(
-                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg min-h-[80px] transition-all duration-200 ease-in-out",
-                      isClickable && "cursor-pointer hover:scale-[1.03] hover:shadow-xl",
-                      getSubjectColor(period.subject)
-                    )}
-                    style={{ animation: `fade-in-up 0.5s ${timeIndex * 0.05 + dayIndex * 0.02}s ease-out forwards`, opacity: 0 }}
-                  >
-                    <p className="font-bold text-sm sm:text-base">{period.subject}</p>
-                    <p className="text-xs sm:text-sm opacity-80">{period.teacher}</p>
-                  </div>
-                );
-              })}
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
-      
       <Dialog open={!!selectedPeriod} onOpenChange={(isOpen) => !isOpen && setSelectedPeriod(null)}>
         <DialogContent className="sm:max-w-md">
           {selectedPeriod && (
