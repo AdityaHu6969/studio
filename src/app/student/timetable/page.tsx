@@ -8,26 +8,37 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { format, isFuture, isSameDay, isSaturday, isSunday } from 'date-fns';
+import { format, isFuture, isSameDay, isSaturday, isSunday, startOfDay } from 'date-fns';
+
+const officialHolidays = [
+  new Date(2025, 7, 15), // Independence Day (month is 0-indexed)
+  new Date(2025, 9, 21), // Diwali
+  new Date(2025, 11, 25), // Christmas
+];
+
+const isOfficialHoliday = (date: Date) => {
+  const startOfDate = startOfDay(date);
+  return officialHolidays.some(holiday => isSameDay(startOfDate, holiday));
+};
 
 export default function AttendanceHistoryPage() {
   const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
-  const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
-    setIsMounted(true);
     // Set initial date only on the client after mount to avoid hydration mismatch
     setSelectedDate(new Date());
   }, []);
 
   const handleDateSelect = (date: Date | undefined) => {
-    if (!date) return;
+    if (!date || isFuture(date)) return;
     setSelectedDate(date);
     setIsPopoverOpen(false); // Close popover after selection
   };
+
+  const selectedDateForDisplay = selectedDate || new Date();
   
-  if (!isMounted) {
+  if (selectedDate === undefined) {
     // Render a skeleton loading state on the server and initial client render
     return (
       <div className="p-4 sm:p-6 lg:p-8">
@@ -91,25 +102,27 @@ export default function AttendanceHistoryPage() {
                     variant={"outline"}
                     className={cn(
                       "w-full md:w-[280px] justify-start text-left font-normal",
-                      !selectedDate && "text-muted-foreground"
+                      !selectedDateForDisplay && "text-muted-foreground"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+                    {selectedDateForDisplay ? format(selectedDateForDisplay, "PPP") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
                   <Calendar
                     mode="single"
-                    selected={selectedDate}
+                    selected={selectedDateForDisplay}
                     onSelect={handleDateSelect}
                     initialFocus
-                    disabled={(date) => isFuture(date) && !isSameDay(date, new Date())}
+                    disabled={isFuture}
                     modifiers={{
-                      holiday: (date) => isSunday(date) || isSaturday(date),
+                      holiday: (date) => (isSunday(date) || isSaturday(date)) && !isOfficialHoliday(date),
+                      officialHoliday: isOfficialHoliday,
                     }}
                     modifiersClassNames={{
                       holiday: "day-holiday",
+                      officialHoliday: "day-official-holiday",
                     }}
                   />
                 </PopoverContent>
@@ -119,10 +132,10 @@ export default function AttendanceHistoryPage() {
       </Card>
        <Card className="mt-6">
         <CardHeader>
-            <CardTitle>Records for {selectedDate ? format(selectedDate, "PPP") : '...'}</CardTitle>
+            <CardTitle>Records for {selectedDateForDisplay ? format(selectedDateForDisplay, "PPP") : '...'}</CardTitle>
         </CardHeader>
         <CardContent>
-          <TimetableHistoryView selectedDate={selectedDate} />
+          <TimetableHistoryView selectedDate={selectedDateForDisplay} />
         </CardContent>
       </Card>
     </div>

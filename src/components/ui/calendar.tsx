@@ -49,18 +49,24 @@ function Calendar({
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
+        day_holiday: "",
+        day_official_holiday: "",
         ...classNames,
       }}
       components={{
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" {...props} />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" {...props} />,
         DayContent: ({ date, activeModifiers }) => {
-          const isHoliday = activeModifiers.holiday;
+          const isWeekendHoliday = activeModifiers.holiday;
+          const isOfficialHoliday = activeModifiers.officialHoliday;
           return (
             <div className="relative flex h-full w-full items-center justify-center">
               {date.getDate()}
-              {isHoliday && (
+              {isWeekendHoliday && (
                 <div className="absolute bottom-1 h-1 w-1 rounded-full bg-destructive" />
+              )}
+              {isOfficialHoliday && (
+                <div className="absolute bottom-1 h-1 w-1 rounded-full bg-orange-500" />
               )}
             </div>
           );
