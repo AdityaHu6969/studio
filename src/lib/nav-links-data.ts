@@ -1,27 +1,37 @@
-import type { LucideIcon } from "lucide-react";
 import { LayoutDashboard, CalendarCheck, Users, ShieldCheck, Settings, CalendarClock, Calendar } from "lucide-react";
 
+// The NavLink now stores the name of the icon as a string.
 export interface NavLink {
   href: string;
   label: string;
-  icon: LucideIcon;
+  iconName: keyof typeof import("lucide-react");
 }
+
+export const navIcons = {
+  LayoutDashboard,
+  CalendarCheck,
+  Users,
+  ShieldCheck,
+  Settings,
+  CalendarClock,
+  Calendar,
+};
 
 export const studentNavLinks: NavLink[] = [
   {
     href: "/student/dashboard",
     label: "Dashboard",
-    icon: LayoutDashboard,
+    iconName: "LayoutDashboard",
   },
   {
     href: "/student/timetable",
     label: "Attendance History",
-    icon: CalendarClock,
+    iconName: "CalendarClock",
   },
   {
     href: "/student/courses",
     label: "Timetable",
-    icon: Calendar,
+    iconName: "Calendar",
   }
 ];
 
@@ -29,7 +39,7 @@ export const teacherNavLinks: NavLink[] = [
   {
     href: "/teacher/attendance",
     label: "Attendance",
-    icon: CalendarCheck,
+    iconName: "CalendarCheck",
   },
 ];
 
@@ -37,12 +47,12 @@ export const adminNavLinks: NavLink[] = [
   {
     href: "/admin/dashboard",
     label: "User Management",
-    icon: Users,
+    iconName: "Users",
   },
   {
     href: "#",
     label: "Settings",
-    icon: Settings,
+    iconName: "Settings",
   },
 ];
 
@@ -51,6 +61,6 @@ export const godAdminNavLinks: NavLink[] = [
   {
     href: "#",
     label: "System Control",
-    icon: ShieldCheck,
+    iconName: "ShieldCheck",
   },
 ];
