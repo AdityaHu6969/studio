@@ -59,6 +59,7 @@ function AppHeader() {
 export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const { isMobile, setOpenMobile } = useSidebar();
 
   const handleLogout = () => {
     if (onLogout) {
@@ -67,6 +68,12 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
       localStorage.removeItem('isLoggedIn');
       localStorage.removeItem('userRole');
       router.push('/');
+    }
+  };
+
+  const handleLinkClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
     }
   };
 
@@ -83,7 +90,7 @@ export function AppShell({ children, navLinks, user, onLogout }: AppShellProps) 
           <SidebarMenu>
             {navLinks.map((link) => (
               <SidebarMenuItem key={link.href}>
-                <Link href={link.href} className="w-full">
+                <Link href={link.href} className="w-full" onClick={handleLinkClick}>
                   <SidebarMenuButton
                     isActive={pathname === link.href}
                     tooltip={link.label}
