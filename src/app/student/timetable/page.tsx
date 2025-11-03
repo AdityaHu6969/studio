@@ -26,45 +26,6 @@ export default function AttendanceHistoryPage() {
   
   const selectedDateForDisplay = selectedDate || new Date();
   
-  if (selectedDate === undefined) {
-    return (
-      <div className="p-4 sm:p-6 lg:p-8">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold tracking-tight">Attendance History</h1>
-          <p className="text-muted-foreground">Review your past attendance records by selecting a date.</p>
-        </div>
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-                <ListCollapse className="h-5 w-5" />
-                <CardTitle>History Log</CardTitle>
-            </div>
-            <CardDescription className="pt-2">
-              Select a date to view a detailed record of your attendance for that day.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-             <div className="flex flex-col items-start gap-4 md:flex-row">
-                <div className="w-full md:w-[280px] h-10 bg-muted rounded-md animate-pulse" />
-            </div>
-          </CardContent>
-        </Card>
-         <Card className="mt-6">
-          <CardHeader>
-              <CardTitle>Records for ...</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-96 w-full rounded-md border p-4">
-                <div className="flex h-full min-h-[200px] items-center justify-center text-muted-foreground">
-                    <p>Loading...</p>
-                </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-6">
@@ -103,11 +64,16 @@ export default function AttendanceHistoryPage() {
                     onSelect={handleDateSelect}
                     initialFocus
                     disabled={isFuture}
-                    modifiers={{
-                      holiday: (date) => isSunday(date) || isSaturday(date),
-                    }}
-                    modifiersClassNames={{
-                      holiday: 'day-holiday',
+                    formatters={{
+                      formatWeekdayName: (day) => {
+                        const dayName = format(day, 'E');
+                        const isWeekend = day.getDay() === 0 || day.getDay() === 6;
+                        return (
+                          <span className={cn(isWeekend && "text-destructive")}>
+                            {dayName.slice(0, 2)}
+                          </span>
+                        );
+                      }
                     }}
                   />
                 </PopoverContent>
