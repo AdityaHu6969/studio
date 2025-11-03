@@ -1,6 +1,6 @@
 
 import { AppShell } from "@/components/shared/app-shell";
-import { StudentNav } from "@/lib/nav-links";
+import { StudentNav } from "@/lib/nav-links.tsx";
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function StudentLayout({

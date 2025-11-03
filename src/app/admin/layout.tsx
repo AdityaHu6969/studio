@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { AppShell } from "@/components/shared/app-shell";
-import { AdminNav, GodAdminNav } from "@/lib/nav-links";
+import { AdminNav, GodAdminNav } from "@/lib/nav-links.tsx";
 import { PinLock } from "@/components/admin/pin-lock";
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
