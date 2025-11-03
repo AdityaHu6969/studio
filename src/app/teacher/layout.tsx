@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { AppShell } from "@/components/shared/app-shell";
 import { teacherNavLinks } from "@/lib/nav-links";
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -11,16 +9,6 @@ export default function TeacherLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    const userRole = localStorage.getItem('userRole');
-    if (isLoggedIn !== 'true' || userRole !== 'teacher') {
-      router.replace('/login?role=teacher');
-    }
-  }, [router]);
-
   const user = {
     name: "Dr. Evelyn Reed",
     email: "e.reed@patel.edu",
@@ -28,5 +16,11 @@ export default function TeacherLayout({
     role: "Teacher",
   };
 
-  return <AppShell navLinks={teacherNavLinks} user={user}>{children}</AppShell>;
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userRole');
+    window.location.href = '/';
+  };
+
+  return <AppShell navLinks={teacherNavLinks} user={user} onLogout={handleLogout}>{children}</AppShell>;
 }

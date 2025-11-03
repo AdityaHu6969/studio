@@ -2,31 +2,34 @@
 
 import { useEffect, useState, Suspense } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { Loader } from '@/components/shared/loader';
 
-const fontInter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
 function RootLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  // The loader is now handled by Suspense, so we can simplify this.
-  // We'll keep a minimal loading state just for the very initial, non-navigational load if needed.
-  const [loading, setLoading] = useState(pathname === '/' || pathname.startsWith('/login'));
+  const router = useRouter();
+  const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
-    const isAuthPage = pathname === '/' || pathname.startsWith('/login');
-    if (!isAuthPage) {
-      setLoading(false);
-    }
-  }, [pathname]);
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const userRole = localStorage.getItem('userRole');
+    const isAuthPage = pathname === '/' || pathname.startsWith('/login') || pathname.startsWith('/set-password') || pathname.startsWith('/otp-verify');
 
+    if (!isLoggedIn && !isAuthPage) {
+      router.replace('/');
+    } else if (isLoggedIn && userRole) {
+      const expectedPath = `/${userRole}`;
+      if (!pathname.startsWith(expectedPath) && !isAuthPage) {
+        router.replace(expectedPath.includes('student') ? '/student/dashboard' : expectedPath.includes('teacher') ? '/teacher/attendance' : '/admin/dashboard');
+      } else {
+        setIsVerified(true);
+      }
+    } else {
+      setIsVerified(true);
+    }
+  }, [pathname, router]);
 
   // A suspense boundary will show the fallback UI instantly on navigation
   // while the server renders the next page.
@@ -38,10 +41,11 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
         <meta name="description" content="Your one-stop portal for college activities." />
         <meta name="theme-color" content="#4B0082" />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon-192x192.png"></link>
       </head>
-      <body className={cn("font-body antialiased", fontInter.variable)}>
+      <body className={cn("font-body antialiased")}>
         <Suspense fallback={<body className="flex min-h-screen items-center justify-center bg-background"><Loader /></body>}>
-          {children}
+          {isVerified ? children : <div className="flex min-h-screen items-center justify-center bg-background"><Loader /></div>}
         </Suspense>
         <Toaster />
       </body>
