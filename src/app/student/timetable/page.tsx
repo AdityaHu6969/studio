@@ -5,30 +5,28 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { TimetableHistoryView } from "@/components/student/timetable-history-view";
 import { ListCollapse, Calendar as CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Calendar, CalendarProps } from '@/components/ui/calendar';
+import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { format, isFuture, isSaturday, isSunday } from 'date-fns';
 
 export default function AttendanceHistoryPage() {
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
+  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>();
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
 
   React.useEffect(() => {
-    // Set initial date only on the client after mount to avoid hydration mismatch
     setSelectedDate(new Date());
   }, []);
 
   const handleDateSelect = (date: Date | undefined) => {
     if (!date) return;
     setSelectedDate(date);
-    setIsPopoverOpen(false); // Close popover after selection
+    setIsPopoverOpen(false);
   };
   
   const selectedDateForDisplay = selectedDate || new Date();
   
   if (selectedDate === undefined) {
-    // Render a skeleton loading state on the server and initial client render
     return (
       <div className="p-4 sm:p-6 lg:p-8">
         <div className="mb-6">
@@ -109,7 +107,7 @@ export default function AttendanceHistoryPage() {
                       holiday: (date) => isSunday(date) || isSaturday(date),
                     }}
                     modifiersClassNames={{
-                      holiday: "day-holiday",
+                      holiday: 'day-holiday',
                     }}
                   />
                 </PopoverContent>
