@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import * as React from 'react';
@@ -56,7 +54,7 @@ export default function TimetablePage() {
         <h1 className="text-3xl font-bold tracking-tight">Weekly Timetable</h1>
         <p className="text-muted-foreground">Your weekly class schedule. Click a class for more details.</p>
       </div>
-      <div className="w-full overflow-x-auto rounded-lg border bg-card/20 p-2">
+      <div className="w-full overflow-x-auto rounded-lg border bg-card p-2">
         <div className="grid grid-cols-[auto_repeat(5,1fr)] gap-1 min-w-[600px]">
           {/* Header Row */}
           <div className="font-semibold p-3 sticky left-0 z-10 text-xs sm:text-sm text-muted-foreground">Time</div>
@@ -83,7 +81,7 @@ export default function TimetablePage() {
                     key={`${time}-${day}`}
                     onClick={() => handlePeriodClick(period, day, time)}
                     className={cn(
-                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg min-h-[80px] transition-all duration-200 ease-in-out bg-card",
+                      "relative flex flex-col items-center justify-center p-2 text-center rounded-lg min-h-[80px] transition-all duration-200 ease-in-out bg-card/50",
                       isClickable && "cursor-pointer hover:scale-[1.03] hover:shadow-xl",
                       getStatusColor(period.status, period.subject)
                     )}
