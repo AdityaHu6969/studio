@@ -16,17 +16,20 @@ const fontInter = Inter({
 
 function RootLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  // The loader is now handled by Suspense, so we can simplify this.
+  // We'll keep a minimal loading state just for the very initial, non-navigational load if needed.
   const [loading, setLoading] = useState(pathname === '/' || pathname.startsWith('/login'));
 
   useEffect(() => {
-    // This effect handles showing the loader on initial auth pages,
-    // but we let the nested layouts/pages handle their own redirects and content switching.
-    // The main purpose is to avoid a flash of unstyled or incorrect content.
     const isAuthPage = pathname === '/' || pathname.startsWith('/login');
-    setLoading(isAuthPage);
+    if (!isAuthPage) {
+      setLoading(false);
+    }
   }, [pathname]);
 
-  // A suspense boundary can be useful here if children trigger suspense
+
+  // A suspense boundary will show the fallback UI instantly on navigation
+  // while the server renders the next page.
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -52,5 +55,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // We wrap the main logic in a component that can use hooks.
   return <RootLayoutContent>{children}</RootLayoutContent>;
 }
